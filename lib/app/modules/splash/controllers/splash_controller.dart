@@ -1,0 +1,26 @@
+import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+class SplashController extends GetxController {
+  @override
+  void onInit() {
+    super.onInit();
+    _navigateAfterDelay();
+  }
+
+  void _navigateAfterDelay() async {
+    await Future.delayed(const Duration(seconds: 1));
+
+    final prefs = await SharedPreferences.getInstance();
+    bool hasSeenOnboarding = prefs.getBool('seen_stylish') ??false;
+
+    if (!hasSeenOnboarding) {
+      print("stylish");
+      await prefs.setBool('seen_stylish', true);
+      Get.offAllNamed('/stylish'); // Show StylishPage only once
+    } else {
+      print("login");
+      Get.offAllNamed('/stylish'); // Go directly to home
+    }
+  }
+}
