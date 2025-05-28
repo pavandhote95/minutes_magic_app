@@ -14,8 +14,12 @@ class LoginView extends GetView<LoginController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
-      backgroundColor: Color(0xFFE5FFB9), // light green background
+      backgroundColor: const Color.fromARGB(
+        255,
+        251,
+        245,
+        222,
+      ), // light green background
       body: SingleChildScrollView(
         child: FadeInUp(
           duration: Duration(milliseconds: 2000),
@@ -39,7 +43,7 @@ class LoginView extends GetView<LoginController> {
                   vertical: 32,
                 ),
                 decoration: const BoxDecoration(
-                  color: const Color(0xFFCCFF99), // Slightly lighter green
+                  color: Colors.amberAccent, // Slightly lighter green
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(30),
                     topRight: Radius.circular(30),
@@ -82,9 +86,7 @@ class LoginView extends GetView<LoginController> {
                           Get.toNamed(Routes.OTP);
                         },
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(
-                            0xFF40673B,
-                          ), // dark green
+                          backgroundColor: Colors.black, // dark green
                           padding: const EdgeInsets.symmetric(vertical: 14),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(6),
@@ -94,6 +96,7 @@ class LoginView extends GetView<LoginController> {
                           "Login",
                           style: GoogleFonts.k2d(
                             color: Colors.white,
+                            fontWeight: FontWeight.bold,
                             fontSize: 16,
                           ),
                         ),

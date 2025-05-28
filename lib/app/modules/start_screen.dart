@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -36,6 +37,7 @@ class _StylishViewState extends State<StartView>
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(height: 100),
+
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20.0),
               child: RichText(
@@ -63,11 +65,14 @@ class _StylishViewState extends State<StartView>
               ),
             ),
             SizedBox(height: size.height * 0.02),
-            Center(
-              child: Image.asset(
-                'assets/images/start.png',
-                height: size.height * 0.35,
-                fit: BoxFit.contain,
+            FadeInLeft(
+              duration: Duration(milliseconds: 1000),
+              child: Center(
+                child: Image.asset(
+                  'assets/images/start.png',
+                  height: size.height * 0.35,
+                  fit: BoxFit.contain,
+                ),
               ),
             ),
             SizedBox(height: 10),

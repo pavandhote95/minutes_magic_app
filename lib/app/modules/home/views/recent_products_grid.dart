@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class ProductGridPage extends StatelessWidget {
-  const ProductGridPage({super.key});
+class RecentproductGrid extends StatelessWidget {
+  const RecentproductGrid({super.key});
 
   final List<Product> products = const [
     Product(
@@ -59,7 +59,7 @@ class ProductGridPage extends StatelessWidget {
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 3,
             crossAxisSpacing: 28,
-            mainAxisSpacing: 10,
+            mainAxisSpacing: 2,
             childAspectRatio: 0.50,
           ),
           itemBuilder: (context, index) {

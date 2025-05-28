@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -18,10 +19,13 @@ class OtpView extends GetView<OtpController> {
             children: [
               SizedBox(height: 90),
 
-              Image.asset(
-                ImageURL.otp, // Replace with your actual image path
-                height: 200,
-                fit: BoxFit.contain,
+              FadeInLeft(
+                duration: Duration(milliseconds: 1000),
+                child: Image.asset(
+                  ImageURL.otp, // Replace with your actual image path
+                  height: 200,
+                  fit: BoxFit.contain,
+                ),
               ),
               const SizedBox(height: 32),
               Text(
@@ -71,9 +75,12 @@ class OtpView extends GetView<OtpController> {
                       borderRadius: BorderRadius.circular(8),
                     ),
                   ),
-                  child: const Text(
-                    'Submit',
-                    style: TextStyle(color: Colors.white, fontSize: 16),
+                  child: FadeInLeft(
+                    duration: Duration(milliseconds: 1000),
+                    child: const Text(
+                      'Submit',
+                      style: TextStyle(color: Colors.white, fontSize: 16),
+                    ),
                   ),
                 ),
               ),

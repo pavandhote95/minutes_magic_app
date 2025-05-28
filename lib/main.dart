@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:minutes_magic_app/app/modules/home/views/cart_page.dart';
 import 'app/routes/app_pages.dart';
-
 
 void main() {
   //     Get.put(HairController())
@@ -10,15 +10,13 @@ void main() {
   // Get.put(SpaController());
   // Get.put(ColorController());
   // Get.put(CombinedServiceController());
+
   runApp(
- 
     GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: "Application",
       initialRoute: AppPages.INITIAL,
       getPages: AppPages.routes,
-
-    
     ),
 
     // i am expert in flutter

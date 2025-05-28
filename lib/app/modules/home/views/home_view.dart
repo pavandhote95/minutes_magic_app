@@ -3,137 +3,184 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:minutes_magic_app/app/modules/home/controllers/home_controller.dart';
 import 'package:minutes_magic_app/app/modules/home/views/banner_carousel.dart';
+import 'package:minutes_magic_app/app/modules/home/views/cart_page.dart';
 import 'package:minutes_magic_app/app/modules/home/views/product_grid_veiw.dart';
+import 'package:minutes_magic_app/app/delivery_view.dart';
+import 'package:minutes_magic_app/app/profile_view.dart';
+import 'package:minutes_magic_app/app/search_veiw.dart';
 
-class HomeView extends GetView<HomeController> {
-
+class HomeView extends StatefulWidget {
   const HomeView({super.key});
 
+  @override
+  State<HomeView> createState() => _HomeViewState();
+}
 
+class _HomeViewState extends State<HomeView> {
+  final controller = Get.put(HomeController());
 
-  final categories = const [
+  int _selectedIndex = 0;
 
+  final List<Widget> _pages = [
+    const HomePageContent(),
 
-    {'name': 'Spices', 'icon': 'assets/images/spices.png'},
-    {'name': 'Dry Fruits', 'icon': 'assets/images/Dry Fruits.png'},
-    {'name': 'Rice', 'icon': 'assets/images/rice.png'},
-    {'name': 'Drinks', 'icon': 'assets/images/eggs.png'},
-    {'name': 'Eggs', 'icon': 'assets/images/bread.png'},
-    {'name': 'Bread', 'icon': 'assets/images/fruits.png'},
-    {'name': 'Fruits', 'icon': 'assets/images/drinks.png'},
-    {'name': 'Vegetables', 'icon': 'assets/images/vegetable.png'},
-
+    OrderView(),
+    SearchView(),
+    CartPage(),
+    ProfileView(),
   ];
 
-
-  final homeandkitchen = const [
-
-
-    {'name': 'Spices', 'icon': 'assets/images/spices.png'},
-    {'name': 'Dry Fruits', 'icon': 'assets/images/Dry Fruits.png'},
-    {'name': 'Rice', 'icon': 'assets/images/rice.png'},
-    {'name': 'Drinks', 'icon': 'assets/images/eggs.png'},
-    {'name': 'Eggs', 'icon': 'assets/images/bread.png'},
-    {'name': 'Bread', 'icon': 'assets/images/fruits.png'},
-    {'name': 'Fruits', 'icon': 'assets/images/drinks.png'},
-    {'name': 'Vegetables', 'icon': 'assets/images/vegetable.png'},
-
-  ];
+  int _previousIndex = 0;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        leading: const Icon(Icons.location_on, color: Colors.red),
-        title:  Text(
-          'Delivered Before You Know It\nP.N - 7 sector-15 , Mansarow...',
-          style: GoogleFonts.poppins(fontSize: 14, color: Colors.black),
-        ),
-        actions: [
-IconButton(
-  icon: Image.asset(
-    'assets/icons/person.png', // apni image path yahan dein
-    width: 24,
-    height: 24,
-  ),
-  onPressed: () {
-    // Action on tap
-  },
-)
+      appBar: _selectedIndex == 0 ? _buildHomeAppBar() : null,
 
-        ],
-      ),
-      body: SingleChildScrollView(
-         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Banner
-           BannerCarousel(),
-            const SizedBox(height: 16),
-
-            const Text('Top category', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-            const SizedBox(height: 15),
-            buildCategoryGrid(categories),
-
-            const SizedBox(height: 1),
-            const Text('Home & Kitchen Essentials', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-            const SizedBox(height: 15),
-            buildCategoryGrid(homeandkitchen),
-                    const Text('Producs', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-
-
-            SizedBox(
-              height: 350,
-              width: 400,
-              child: ProductGridPage()),
-                 const SizedBox(height: 15),
-                 const Text('Popular Shop', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-            const SizedBox(height: 15),
-               SizedBox(
-              height: 350,
-              width: 400,
-              child: ProductGridPage()),
-                 const SizedBox(height: 15),
-                 
-    
-
-
-
-          ],
+      // 🔥 1. Wrap your page in AnimatedSwitcher
+      body: AnimatedSwitcher(
+        duration: const Duration(milliseconds: 20),
+        child: KeyedSubtree(
+          key: ValueKey(_selectedIndex),
+          child: _pages[_selectedIndex],
         ),
       ),
 
-      bottomNavigationBar: BottomNavigationBar(
+      bottomNavigationBar: _buildBottomNavBar(),
+    );
+  }
+
+  PreferredSizeWidget _buildHomeAppBar() => AppBar(
+    backgroundColor: Colors.white,
+    elevation: 0,
+    leading: const Icon(Icons.location_on, color: Colors.red),
+    title: Text(
+      'Delivered Before You Know It\nP.N - 7 sector-15 , Mansarow...',
+      style: GoogleFonts.poppins(fontSize: 14, color: Colors.black),
+    ),
+    actions: [
+      IconButton(
+        icon: Image.asset('assets/icons/person.png', width: 24, height: 24),
+        onPressed: () {},
+      ),
+    ],
+  );
+
+  Widget _buildBottomNavBar() {
+    return Theme(
+      data: Theme.of(context).copyWith(
+        splashFactory: NoSplash.splashFactory,
+        splashColor: Colors.transparent,
+        highlightColor: Colors.transparent,
+      ),
+      child: BottomNavigationBar(
         backgroundColor: Colors.white,
         type: BottomNavigationBarType.fixed,
         selectedItemColor: Colors.red,
         unselectedItemColor: Colors.black,
-        items:  [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: ''),
-      BottomNavigationBarItem(
-  icon: Image.asset(
-    'assets/icons/bike.png', // Aapka image path
-    width: 24,
-    height: 24,
-  ),
-  label: '',
-),
+        currentIndex: _selectedIndex,
+        onTap:
+            (index) =>
+                setState(() => _selectedIndex = index), // 🔔 triggers animation
+        items: [
+          const BottomNavigationBarItem(icon: Icon(Icons.home), label: ''),
+          BottomNavigationBarItem(
+            icon: ColorFiltered(
+              colorFilter: ColorFilter.mode(
+                _selectedIndex == 1 ? Colors.red : Colors.black,
+                BlendMode.srcIn,
+              ),
+              child: Image.asset(
+                'assets/icons/bike.png',
+                width: 24,
+                height: 24,
+              ),
+            ),
+            label: '',
+          ),
+          const BottomNavigationBarItem(icon: Icon(Icons.search), label: ''),
+          const BottomNavigationBarItem(
+            icon: Icon(Icons.shopping_cart),
+            label: '',
+          ),
+          const BottomNavigationBarItem(icon: Icon(Icons.person), label: ''),
+        ],
+      ),
+    );
+  }
+}
 
-          BottomNavigationBarItem(icon: Icon(Icons.search), label: ''),
-          BottomNavigationBarItem(icon: Icon(Icons.shopping_cart), label: ''),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: ''),
+// Moved home screen UI into a separate widget to keep code clean
+class HomePageContent extends StatelessWidget {
+  const HomePageContent({super.key});
+
+  final categories = const [
+    {'name': 'Spices', 'icon': 'assets/images/spices.png'},
+    {'name': 'Dry Fruits', 'icon': 'assets/images/Dry Fruits.png'},
+    {'name': 'Rice', 'icon': 'assets/images/rice.png'},
+    {'name': 'Drinks', 'icon': 'assets/images/eggs.png'},
+    {'name': 'Eggs', 'icon': 'assets/images/bread.png'},
+    {'name': 'Bread', 'icon': 'assets/images/fruits.png'},
+    {'name': 'Fruits', 'icon': 'assets/images/drinks.png'},
+    {'name': 'Vegetables', 'icon': 'assets/images/vegetable.png'},
+  ];
+
+  final homeandkitchen = const [
+    {'name': 'Spices', 'icon': 'assets/images/spices.png'},
+    {'name': 'Dry Fruits', 'icon': 'assets/images/Dry Fruits.png'},
+    {'name': 'Rice', 'icon': 'assets/images/rice.png'},
+    {'name': 'Drinks', 'icon': 'assets/images/eggs.png'},
+    {'name': 'Eggs', 'icon': 'assets/images/bread.png'},
+    {'name': 'Bread', 'icon': 'assets/images/fruits.png'},
+    {'name': 'Fruits', 'icon': 'assets/images/drinks.png'},
+    {'name': 'Vegetables', 'icon': 'assets/images/vegetable.png'},
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          BannerCarousel(),
+          const SizedBox(height: 16),
+          const Text(
+            'Top category',
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 15),
+          buildCategoryGrid(categories),
+
+          const SizedBox(height: 1),
+          const Text(
+            'Home & Kitchen Essentials',
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 15),
+          buildCategoryGrid(homeandkitchen),
+
+          const SizedBox(height: 15),
+          const Text(
+            'Producs',
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          ),
+          SizedBox(height: 350, width: 400, child: ProductGridPage()),
+
+          const SizedBox(height: 15),
+          const Text(
+            'Popular Shop',
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 15),
+          SizedBox(height: 350, width: 400, child: ProductGridPage()),
         ],
       ),
     );
   }
 
   Widget buildCategoryGrid(List<Map<String, String>> list) {
-
-    
     return GridView.builder(
       itemCount: list.length,
       physics: const NeverScrollableScrollPhysics(),
@@ -151,7 +198,6 @@ IconButton(
             Container(
               height: 60,
               width: 60,
-           
               decoration: BoxDecoration(
                 color: Colors.grey.shade200,
                 borderRadius: BorderRadius.circular(12),
