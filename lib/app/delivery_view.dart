@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:minutes_magic_app/app/location_view.dart';
-import 'package:minutes_magic_app/app/payment/recever_location.dart';
 
 class OrderView extends StatelessWidget {
   const OrderView({super.key});
@@ -18,12 +14,10 @@ class OrderView extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       resizeToAvoidBottomInset: true,
-
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
             children: [
-              // Top red background with image and text
               Container(
                 width: double.infinity,
                 padding: const EdgeInsets.symmetric(vertical: 40),

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:minutes_magic_app/app/modules/home/views/product_grid_veiw.dart';
 import 'package:minutes_magic_app/app/modules/home/views/recent_products_grid.dart';
 
 class CartPage extends StatelessWidget {

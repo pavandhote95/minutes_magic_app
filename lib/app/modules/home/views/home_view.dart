@@ -30,8 +30,6 @@ class _HomeViewState extends State<HomeView> {
     ProfileView(),
   ];
 
-  int _previousIndex = 0;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -134,7 +132,7 @@ class HomePageContent extends StatelessWidget {
     {'name': 'Eggs', 'icon': 'assets/images/bread.png'},
     {'name': 'Bread', 'icon': 'assets/images/fruits.png'},
     {'name': 'Fruits', 'icon': 'assets/images/drinks.png'},
-    {'name': 'Vegetables', 'icon': 'assets/images/vegetable.png'},
+    {'name': 'Vegetables', 'icon': 'assets/images/vegetable.pnwg'},
   ];
 
   @override

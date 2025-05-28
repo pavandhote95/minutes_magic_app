@@ -6,8 +6,6 @@ import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/login/bindings/login_binding.dart';
 import '../modules/login/views/login_view.dart';
-
-import '../modules/splash/bindings/splash_binding.dart';
 import '../modules/splash/views/splash_view.dart';
 
 part 'app_routes.dart';
@@ -18,8 +16,6 @@ class AppPages {
   static const INITIAL = Routes.SPLASH;
 
   static final routes = [
-    
-
     //  GetPage(
     //   name: _Paths.HAIR,
     //   page: () =>  HairView(),
@@ -30,18 +26,12 @@ class AppPages {
     //   page: () => const ResendotpView(),
     //   binding: HomeBinding(),
     // ),
-    
-       GetPage(
+    GetPage(
       name: _Paths.OTP,
       page: () => const OtpView(),
       binding: HomeBinding(),
-
     ),
-    GetPage(
-      name: _Paths.HOME,
-      page: () =>  HomeView(),
-      binding: HomeBinding(),
-    ),
+    GetPage(name: _Paths.HOME, page: () => HomeView(), binding: HomeBinding()),
     // GetPage(
     //   name: _Paths.REGISTRATION,
     //   page: () => const RegisterView(),
@@ -54,10 +44,10 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.SPLASH,
-      page: () =>  SplashView(),
+      page: () => SplashView(),
       binding: HomeBinding(),
-      
-       // This must be included
+
+      // This must be included
     ),
     // GetPage(
     //   name: _Paths.LOCATION,
@@ -74,11 +64,11 @@ class AppPages {
       page: () => const OtpView(),
       binding: HomeBinding(),
     ),
+
     // GetPage(
     //   name: _Paths.ROTP,
     //   page: () => const ResendotpView(),
     //   binding: HomeBinding(),
     // ),
-
   ];
 }
