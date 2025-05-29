@@ -18,6 +18,6 @@ void main() {
       getPages: AppPages.routes,
     ),
 
-    //i am devloper
+    //flutter
   );
 }
