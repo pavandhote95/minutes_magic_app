@@ -3,10 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:minutes_magic_app/app/constants/ImageURL.dart';
-import 'package:minutes_magic_app/app/modules/otp/controllers/otp_controller.dart';
 
-class OtpView extends GetView<OtpController> {
-  const OtpView({super.key});
+import 'package:minutes_magic_app/app/modules/payment/controllers/paymet_controller.dart';
+
+class PaymentView extends GetView<PaymentController> {
+  const PaymentView({super.key});
 
   @override
   Widget build(BuildContext context) {
