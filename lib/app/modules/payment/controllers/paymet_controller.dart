@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 
-class OtpController extends GetxController {
+class PaymentController extends GetxController {
   //TODO: Implement HomeController
 
   final count = 0.obs;

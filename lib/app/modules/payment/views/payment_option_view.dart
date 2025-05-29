@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:minutes_magic_app/app/payment/cart_payment_screen.dart';
+import 'package:minutes_magic_app/app/modules/payment/views/cart_payment_screen.dart';
 
 class PaymentOptionScreen extends StatelessWidget {
   const PaymentOptionScreen({super.key});
