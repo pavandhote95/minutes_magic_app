@@ -110,6 +110,7 @@ class _StylishViewState extends State<StartView>
                       Get.toNamed('/login');
                     },
                     style: ElevatedButton.styleFrom(
+
                       backgroundColor: Colors.black,
                       shape: const StadiumBorder(),
                       padding: const EdgeInsets.symmetric(

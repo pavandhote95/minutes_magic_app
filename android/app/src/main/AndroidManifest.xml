@@ -7,6 +7,8 @@
         android:label="minutes_magic_app"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
+        <meta-data android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyB87AZV6J8so-TZHd-ap1TqaZL_PpO487k"/>
         <activity
             android:name=".MainActivity"
             android:exported="true"

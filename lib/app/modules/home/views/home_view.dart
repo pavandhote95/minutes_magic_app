@@ -18,9 +18,7 @@ class HomeView extends StatefulWidget {
 
 class _HomeViewState extends State<HomeView> {
   final controller = Get.put(HomeController());
-
   int _selectedIndex = 0;
-
   final List<Widget> _pages = [
     const HomePageContent(),
 
@@ -37,12 +35,9 @@ class _HomeViewState extends State<HomeView> {
       appBar: _selectedIndex == 0 ? _buildHomeAppBar() : null,
 
       // 🔥 1. Wrap your page in AnimatedSwitcher
-      body: AnimatedSwitcher(
-        duration: const Duration(milliseconds: 20),
-        child: KeyedSubtree(
-          key: ValueKey(_selectedIndex),
-          child: _pages[_selectedIndex],
-        ),
+      body: KeyedSubtree(
+        key: ValueKey(_selectedIndex),
+        child: _pages[_selectedIndex],
       ),
 
       bottomNavigationBar: _buildBottomNavBar(),
@@ -64,7 +59,6 @@ class _HomeViewState extends State<HomeView> {
       ),
     ],
   );
-
   Widget _buildBottomNavBar() {
     return Theme(
       data: Theme.of(context).copyWith(
@@ -113,6 +107,8 @@ class _HomeViewState extends State<HomeView> {
 class HomePageContent extends StatelessWidget {
   const HomePageContent({super.key});
 
+
+
   final categories = const [
     {'name': 'Spices', 'icon': 'assets/images/spices.png'},
     {'name': 'Dry Fruits', 'icon': 'assets/images/Dry Fruits.png'},
@@ -132,7 +128,7 @@ class HomePageContent extends StatelessWidget {
     {'name': 'Eggs', 'icon': 'assets/images/bread.png'},
     {'name': 'Bread', 'icon': 'assets/images/fruits.png'},
     {'name': 'Fruits', 'icon': 'assets/images/drinks.png'},
-    {'name': 'Vegetables', 'icon': 'assets/images/vegetable.pnwg'},
+    {'name': 'Vegetables', 'icon': 'assets/images/vegetable.png'},
   ];
 
   @override

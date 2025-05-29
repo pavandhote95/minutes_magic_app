@@ -1,16 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:minutes_magic_app/app/location_view.dart';
 
-class OrderView extends StatelessWidget {
+class OrderView extends StatefulWidget {
   const OrderView({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final TextEditingController pickupController = TextEditingController(
-      text: "Evergreen Mills Rd, Aldie, VA",
-    );
-    final TextEditingController dropoffController = TextEditingController();
+  State<OrderView> createState() => _OrderViewState();
+}
 
+class _OrderViewState extends State<OrderView> {
+  final TextEditingController pickupController = TextEditingController(
+    text: "Evergreen Mills Rd, Aldie, VA",
+  );
+  final TextEditingController dropoffController = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       resizeToAvoidBottomInset: true,
@@ -43,25 +50,16 @@ class OrderView extends StatelessWidget {
                   ],
                 ),
               ),
-
               const SizedBox(height: 24),
-              const Icon(
-                Icons.local_shipping_outlined,
-                size: 32,
-                color: Colors.grey,
-              ),
+              const Icon(Icons.local_shipping_outlined, size: 32, color: Colors.grey),
               const SizedBox(height: 4),
-              Text(
-                "Courier",
-                style: GoogleFonts.poppins(fontSize: 16, color: Colors.grey),
-              ),
+              Text("Courier", style: GoogleFonts.poppins(fontSize: 16, color: Colors.grey)),
               const SizedBox(height: 24),
-
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 24),
                 child: Column(
                   children: [
-                    // Pickup
+                    // Pickup field
                     TextField(
                       controller: pickupController,
                       style: GoogleFonts.poppins(),
@@ -83,9 +81,20 @@ class OrderView extends StatelessWidget {
                     ),
                     const SizedBox(height: 16),
 
-                    // Dropoff
+                    // Dropoff field - now editable
                     TextField(
                       controller: dropoffController,
+                      readOnly: false, // <-- make editable
+                      onTap: () async {
+                        if (dropoffController.text.isEmpty) {
+                          final selectedAddress = await Get.to(() => const LocationVeiw());
+                          if (selectedAddress != null && selectedAddress is String) {
+                            setState(() {
+                              dropoffController.text = selectedAddress;
+                            });
+                          }
+                        }
+                      },
                       style: GoogleFonts.poppins(),
                       decoration: InputDecoration(
                         prefixIcon: const Icon(Icons.stop, size: 12),
@@ -99,13 +108,26 @@ class OrderView extends StatelessWidget {
                         ),
                       ),
                     ),
+
                     const SizedBox(height: 32),
 
                     // Book Now Button
                     SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () async {
+                          if (dropoffController.text.isEmpty) {
+                            final selectedAddress = await Get.to(() => const LocationVeiw());
+                            if (selectedAddress != null && selectedAddress is String) {
+                              setState(() {
+                                dropoffController.text = selectedAddress;
+                              });
+                            }
+                          } else {
+                            // Use the existing typed address
+                            print("Booking with drop-off: ${dropoffController.text}");
+                          }
+                        },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.redAccent,
                           padding: const EdgeInsets.symmetric(vertical: 14),
