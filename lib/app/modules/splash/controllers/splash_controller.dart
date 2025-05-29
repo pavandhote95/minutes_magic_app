@@ -12,15 +12,15 @@ class SplashController extends GetxController {
     await Future.delayed(const Duration(seconds: 1));
 
     final prefs = await SharedPreferences.getInstance();
-    bool hasSeenOnboarding = prefs.getBool('seen_stylish') ??false;
+    bool hasSeenOnboarding = prefs.getBool('seen_stylish') ?? false;
 
     if (!hasSeenOnboarding) {
       print("stylish");
       await prefs.setBool('seen_stylish', true);
-      Get.offAllNamed('/stylish'); // Show StylishPage only once
+      Get.offAllNamed('/start'); // Show StylishPage only once
     } else {
       print("login");
-      Get.offAllNamed('/stylish'); // Go directly to home
+      Get.offAllNamed('/start'); // Go directly to home
     }
   }
 }

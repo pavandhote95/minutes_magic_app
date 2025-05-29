@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:minutes_magic_app/app/modules/delivery/views/delivery_view.dart';
 import 'package:minutes_magic_app/app/modules/home/controllers/home_controller.dart';
 import 'package:minutes_magic_app/app/modules/home/views/banner_carousel.dart';
 import 'package:minutes_magic_app/app/modules/home/views/cart_page.dart';
 import 'package:minutes_magic_app/app/modules/home/views/product_grid_veiw.dart';
-import 'package:minutes_magic_app/app/delivery_view.dart';
-import 'package:minutes_magic_app/app/profile_view.dart';
-import 'package:minutes_magic_app/app/search_veiw.dart';
+import 'package:minutes_magic_app/app/modules/profile/views/profile_view.dart';
+import 'package:minutes_magic_app/app/modules/search/views/search_view.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -22,7 +22,7 @@ class _HomeViewState extends State<HomeView> {
   final List<Widget> _pages = [
     const HomePageContent(),
 
-    OrderView(),
+    DeliveryView(),
     SearchView(),
     CartPage(),
     ProfileView(),
@@ -106,8 +106,6 @@ class _HomeViewState extends State<HomeView> {
 // Moved home screen UI into a separate widget to keep code clean
 class HomePageContent extends StatelessWidget {
   const HomePageContent({super.key});
-
-
 
   final categories = const [
     {'name': 'Spices', 'icon': 'assets/images/spices.png'},

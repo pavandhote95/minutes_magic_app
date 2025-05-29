@@ -83,7 +83,7 @@ class LoginView extends GetView<LoginController> {
                       width: double.infinity,
                       child: ElevatedButton(
                         onPressed: () {
-                          Get.toNamed(Routes.OTP);
+                          Get.toNamed(Routes.otp);
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.black, // dark green

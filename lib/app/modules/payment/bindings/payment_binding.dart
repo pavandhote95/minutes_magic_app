@@ -1,9 +1,13 @@
 import 'package:get/get.dart';
 import 'package:minutes_magic_app/app/modules/otp/controllers/otp_controller.dart';
 
-class OtpBinding extends Bindings {
+
+
+class HomeBinding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<OtpController>(() => OtpController());
+    Get.lazyPut<OtpController>(
+      () => OtpController(),
+    );
   }
 }

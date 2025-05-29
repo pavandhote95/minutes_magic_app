@@ -1,7 +1,7 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
+
 import 'package:google_fonts/google_fonts.dart';
 
 class StartView extends StatefulWidget {
@@ -110,7 +110,6 @@ class _StylishViewState extends State<StartView>
                       Get.toNamed('/login');
                     },
                     style: ElevatedButton.styleFrom(
-
                       backgroundColor: Colors.black,
                       shape: const StadiumBorder(),
                       padding: const EdgeInsets.symmetric(
