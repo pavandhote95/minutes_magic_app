@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:minutes_magic_app/app/modules/allcategory/model/product_data.dart';
+import 'package:minutes_magic_app/app/modules/allcategory/model/product_model.dart';
+import 'package:minutes_magic_app/app/modules/allcategory/views/allcategory_view.dart';
 import 'package:minutes_magic_app/app/modules/delivery/views/delivery_view.dart';
 import 'package:minutes_magic_app/app/modules/home/controllers/home_controller.dart';
 import 'package:minutes_magic_app/app/modules/home/views/banner_carousel.dart';
 import 'package:minutes_magic_app/app/modules/home/views/cart_page.dart';
 import 'package:minutes_magic_app/app/modules/home/views/product_grid_veiw.dart';
+import 'package:minutes_magic_app/app/modules/home/views/product_list.dart';
 import 'package:minutes_magic_app/app/modules/profile/views/profile_view.dart';
 import 'package:minutes_magic_app/app/modules/search/views/search_view.dart';
 
@@ -138,9 +142,23 @@ class HomePageContent extends StatelessWidget {
         children: [
           BannerCarousel(),
           const SizedBox(height: 16),
-          const Text(
-            'Top category',
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Text(
+                'Top category',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+              GestureDetector(
+                onTap: () {
+                  Get.to(AllcategoryView());
+                },
+                child: const Text(
+                  'View All',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+              ),
+            ],
           ),
           const SizedBox(height: 15),
           buildCategoryGrid(categories),
@@ -172,7 +190,7 @@ class HomePageContent extends StatelessWidget {
     );
   }
 
-  Widget buildCategoryGrid(List<Map<String, String>> list) {
+  static Widget buildCategoryGrid(List<Map<String, String>> list) {
     return GridView.builder(
       itemCount: list.length,
       physics: const NeverScrollableScrollPhysics(),
@@ -185,20 +203,67 @@ class HomePageContent extends StatelessWidget {
       ),
       itemBuilder: (context, index) {
         final item = list[index];
-        return Column(
-          children: [
-            Container(
-              height: 60,
-              width: 60,
-              decoration: BoxDecoration(
-                color: Colors.grey.shade200,
-                borderRadius: BorderRadius.circular(12),
+        final categoryName = item['name']!;
+
+        // Pick correct product list based on category
+        List<ProductModel> selectedProducts = [];
+        switch (categoryName) {
+          case 'Rice':
+            selectedProducts = riceProducts;
+            break;
+          case 'Drinks':
+            selectedProducts = drinkProducts;
+            break;
+          case 'Eggs':
+            selectedProducts = eggProducts;
+            break;
+          case 'Bread':
+            selectedProducts = breadProducts;
+            break;
+          case 'Fruits':
+            selectedProducts = fruitProducts;
+            break;
+          case 'Vegetables':
+            selectedProducts = vegetableProducts;
+            break;
+          case 'Spices':
+            selectedProducts = spiceProducts;
+            break;
+          case 'Dry Fruits':
+            selectedProducts = dryfruitProducts;
+            break;
+          default:
+            selectedProducts = [];
+        }
+
+        return GestureDetector(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder:
+                    (_) => ProductList(
+                      category: categoryName,
+                      products: selectedProducts,
+                    ),
               ),
-              child: Image.asset(item['icon']!),
-            ),
-            const SizedBox(height: 8),
-            Text(item['name']!, style: const TextStyle(fontSize: 12)),
-          ],
+            );
+          },
+          child: Column(
+            children: [
+              Container(
+                height: 60,
+                width: 60,
+                decoration: BoxDecoration(
+                  color: Colors.grey.shade200,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Image.asset(item['icon']!),
+              ),
+              const SizedBox(height: 8),
+              Text(item['name']!, style: const TextStyle(fontSize: 12)),
+            ],
+          ),
         );
       },
     );
