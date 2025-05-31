@@ -51,7 +51,7 @@ class CategoryGrid {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Container(
+              SizedBox(
                 height: 90,
                 width: 100,
 

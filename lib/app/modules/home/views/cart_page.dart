@@ -62,6 +62,7 @@ class CartPage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              SizedBox(height: 10),
               SizedBox(
                 height: 280,
                 child: ListView.builder(
@@ -72,7 +73,7 @@ class CartPage extends StatelessWidget {
                     return Column(
                       children: [
                         Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                          padding: const EdgeInsets.symmetric(horizontal: 12.0),
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -125,7 +126,7 @@ class CartPage extends StatelessWidget {
                                             IconButton(
                                               icon: const Icon(
                                                 Icons.remove_circle_outline,
-                                                size: 15,
+                                                size: 25,
                                               ),
                                               onPressed: () {
                                                 // handle decrease quantity
@@ -136,7 +137,7 @@ class CartPage extends StatelessWidget {
                                             IconButton(
                                               icon: const Icon(
                                                 Icons.add_circle_outline,
-                                                size: 15,
+                                                size: 25,
                                               ),
                                               onPressed: () {
                                                 // handle increase quantity

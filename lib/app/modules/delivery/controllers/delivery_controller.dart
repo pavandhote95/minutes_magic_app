@@ -8,7 +8,6 @@ class DeliveryController extends GetxController {
     text: "Evergreen Mills Rd, Aldie, VA",
   );
   final dropoffController = TextEditingController();
-
   void clearPickup() {
     pickupController.clear();
   }

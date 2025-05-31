@@ -14,6 +14,7 @@ abstract class Routes {
   static const profile = _Paths.profile;
   static const address = _Paths.address;
   static const delivery = _Paths.delivery;
+  static const PRODUCT_DETAILS = _Paths.PRODUCT_DETAILS;
 }
 
 abstract class _Paths {
@@ -30,4 +31,5 @@ abstract class _Paths {
   static const profile = '/profile';
   static const address = '/address';
   static const delivery = '/delivery';
+  static const PRODUCT_DETAILS = '/product-details';
 }

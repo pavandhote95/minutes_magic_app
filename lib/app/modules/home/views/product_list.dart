@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:minutes_magic_app/app/constants/AppTextStyle.dart';
 import 'package:minutes_magic_app/app/constants/text_style.dart';
 import 'package:minutes_magic_app/app/modules/allcategory/model/product_model.dart';
+import 'package:minutes_magic_app/app/modules/product_details/views/product_details_view.dart';
 
 class ProductList extends StatelessWidget {
   final String category;
@@ -26,6 +28,7 @@ class ProductList extends StatelessWidget {
           icon: const Icon(Icons.arrow_back_ios),
           onPressed: () => Get.back(),
         ),
+
         actions: [
           IconButton(
             icon: Image.asset("assets/icons/sort.png", width: 18, height: 18),
@@ -41,7 +44,7 @@ class ProductList extends StatelessWidget {
             crossAxisCount: 2,
             mainAxisSpacing: 16,
             crossAxisSpacing: 16,
-            childAspectRatio: 0.7,
+            childAspectRatio: 0.8,
           ),
           itemBuilder: (context, index) {
             final product = products[index];
@@ -56,14 +59,19 @@ class ProductList extends StatelessWidget {
                 children: [
                   Expanded(
                     child: Center(
-                      child: Image.asset(
-                        product.image,
-                        height: 80,
-                        fit: BoxFit.contain,
+                      child: GestureDetector(
+                        onTap: () {
+                          Get.to(ProductDetailsView());
+                        },
+                        child: Image.asset(
+                          product.image,
+                          height: 80,
+                          fit: BoxFit.contain,
+                        ),
                       ),
                     ),
                   ),
-                  const SizedBox(height: 8),
+
                   Text(
                     product.name,
                     style: KTextStyle.poppins(
@@ -94,7 +102,18 @@ class ProductList extends StatelessWidget {
                           borderRadius: BorderRadius.circular(12),
                         ),
                         child: IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            ProductDetailsView();
+                            Fluttertoast.showToast(
+                              msg: "Product added to cart",
+                              toastLength: Toast.LENGTH_SHORT,
+                              gravity: ToastGravity.BOTTOM,
+                              timeInSecForIosWeb: 1,
+                              backgroundColor: const Color(0xFF227D25),
+                              textColor: Colors.white,
+                              fontSize: 16.0,
+                            );
+                          },
                           icon: const Icon(Icons.add, color: Colors.white),
                           iconSize: 20,
                           padding: EdgeInsets.zero,

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:minutes_magic_app/app/constants/ImageURL.dart';
+import 'package:minutes_magic_app/app/constants/text_style.dart';
 import 'package:minutes_magic_app/app/modules/otp/controllers/otp_controller.dart';
 
 class OtpView extends GetView<OtpController> {
@@ -75,11 +76,12 @@ class OtpView extends GetView<OtpController> {
                       borderRadius: BorderRadius.circular(8),
                     ),
                   ),
-                  child: FadeInLeft(
-                    duration: Duration(milliseconds: 1000),
-                    child: const Text(
-                      'Submit',
-                      style: TextStyle(color: Colors.white, fontSize: 16),
+                  child: Text(
+                    'Submit',
+                    style: KTextStyle.poppins(
+                      fs: 14,
+                      c: Colors.white,
+                      fw: FontWeight.bold,
                     ),
                   ),
                 ),

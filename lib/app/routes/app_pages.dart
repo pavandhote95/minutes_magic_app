@@ -1,21 +1,25 @@
 import 'package:get/get.dart';
-import 'package:minutes_magic_app/app/modules/address/bindings/address_binding.dart';
-import 'package:minutes_magic_app/app/modules/address/views/address_view.dart';
-import 'package:minutes_magic_app/app/modules/delivery/bindings/delivery_binding.dart';
-import 'package:minutes_magic_app/app/modules/delivery/views/delivery_view.dart';
-import 'package:minutes_magic_app/app/modules/otp/bindings/otp_binding.dart';
-import 'package:minutes_magic_app/app/modules/otp/views/otp_view.dart';
-import 'package:minutes_magic_app/app/modules/profile/bindings/profile_binding.dart';
-import 'package:minutes_magic_app/app/modules/profile/views/profile_view.dart';
-import 'package:minutes_magic_app/app/modules/search/bindings/search_binding.dart';
-import 'package:minutes_magic_app/app/modules/search/views/search_view.dart';
-import 'package:minutes_magic_app/app/modules/splash/bindings/splash_binding.dart';
-import 'package:minutes_magic_app/app/modules/splash/start_screen.dart';
+
+import '../modules/address/bindings/address_binding.dart';
+import '../modules/address/views/address_view.dart';
+import '../modules/delivery/bindings/delivery_binding.dart';
+import '../modules/delivery/views/delivery_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/login/bindings/login_binding.dart';
 import '../modules/login/views/login_view.dart';
+import '../modules/otp/bindings/otp_binding.dart';
+import '../modules/otp/views/otp_view.dart';
+import '../modules/product_details/bindings/product_details_binding.dart';
+import '../modules/product_details/views/product_details_view.dart';
+import '../modules/profile/bindings/profile_binding.dart';
+import '../modules/profile/views/profile_view.dart';
+import '../modules/search/bindings/search_binding.dart';
+import '../modules/search/views/search_view.dart';
+import '../modules/splash/bindings/splash_binding.dart';
+import '../modules/splash/start_screen.dart';
 import '../modules/splash/views/splash_view.dart';
+
 part 'app_routes.dart';
 
 class AppPages {
@@ -90,5 +94,10 @@ class AppPages {
     //   page: () => const HairView(),
     //   binding: HairBinding(),
     // ),
+    GetPage(
+      name: _Paths.PRODUCT_DETAILS,
+      page: () => const ProductDetailsView(),
+      binding: ProductDetailsBinding(),
+    ),
   ];
 }
