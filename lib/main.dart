@@ -3,13 +3,6 @@ import 'package:get/get.dart';
 import 'app/routes/app_pages.dart';
 
 void main() {
-  //     Get.put(HairController())
-  // Get.put(FacialController());
-  // Get.put(NailController());
-  // Get.put(SpaController());
-  // Get.put(ColorController());
-  // Get.put(CombinedServiceController());
-
   runApp(
     GetMaterialApp(
       debugShowCheckedModeBanner: false,
@@ -17,7 +10,5 @@ void main() {
       initialRoute: AppPages.initial,
       getPages: AppPages.routes,
     ),
-
-    //push dev branch
   );
 }

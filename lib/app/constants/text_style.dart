@@ -1,5 +1,4 @@
 import 'dart:ui';
-
 import 'package:google_fonts/google_fonts.dart';
 
 class KTextStyle {
@@ -28,11 +27,13 @@ class KTextStyle {
     fontStyle: FontStyle.normal,
     decoration: decoration,
   );
+
   static inter({
     required double fs,
     required Color c,
     required FontWeight fw,
   }) => GoogleFonts.inter(fontWeight: fw, fontSize: fs, color: c);
+
   static barlow({
     required double fs,
     required Color c,
@@ -53,4 +54,36 @@ class KTextStyle {
     required Color c,
     required FontWeight fw,
   }) => GoogleFonts.aclonica(fontWeight: fw, fontSize: fs, color: c);
+
+  // New Fonts Below
+
+  static roboto({
+    required double fs,
+    required Color c,
+    required FontWeight fw,
+  }) => GoogleFonts.roboto(fontWeight: fw, fontSize: fs, color: c);
+
+  static ubuntu({
+    required double fs,
+    required Color c,
+    required FontWeight fw,
+  }) => GoogleFonts.ubuntu(fontWeight: fw, fontSize: fs, color: c);
+
+  static openSans({
+    required double fs,
+    required Color c,
+    required FontWeight fw,
+  }) => GoogleFonts.openSans(fontWeight: fw, fontSize: fs, color: c);
+
+  static cabin({
+    required double fs,
+    required Color c,
+    required FontWeight fw,
+  }) => GoogleFonts.cabin(fontWeight: fw, fontSize: fs, color: c);
+
+  static rajdhani({
+    required double fs,
+    required Color c,
+    required FontWeight fw,
+  }) => GoogleFonts.rajdhani(fontWeight: fw, fontSize: fs, color: c);
 }

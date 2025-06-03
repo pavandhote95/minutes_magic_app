@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:minutes_magic_app/app/constants/AppTextStyle.dart';
 import 'package:minutes_magic_app/app/modules/home/views/cart_page.dart';
 import '../controllers/product_details_controller.dart';
 
@@ -17,7 +18,21 @@ class ProductDetailsView extends GetView<ProductDetailsController> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(children: [const Icon(Icons.arrow_back)]),
+              Row(
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      Get.back();
+                    },
+                    child: const Icon(Icons.arrow_back_ios),
+                  ),
+                  SizedBox(width: 70),
+                  Text(
+                    "Product Detail",
+                    style: AppTextStyle.Bold(fontSize: 20),
+                  ),
+                ],
+              ),
               const SizedBox(height: 20),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,

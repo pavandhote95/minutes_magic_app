@@ -1,8 +1,10 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 
 import 'package:google_fonts/google_fonts.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class StartView extends StatefulWidget {
   const StartView({super.key});
@@ -13,12 +15,70 @@ class StartView extends StatefulWidget {
 
 class _StylishViewState extends State<StartView>
     with SingleTickerProviderStateMixin {
+  RxString startAddress = ''.obs;
+  TextEditingController startAddressController = TextEditingController();
+  GoogleMapController? mapController;
+
+  Rx<LatLng?> initialPosition = Rx<LatLng?>(null);
   late AnimationController _controller;
 
   @override
   void initState() {
     super.initState();
+
     // Animation controller can be initialized here if needed
+  }
+
+  Future<void> _getCurrentLocation() async {
+    bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      await Geolocator.openLocationSettings();
+      return;
+    }
+
+    LocationPermission permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        Get.snackbar(
+          "Permission Denied",
+          "Location permission is required for this feature.",
+          snackPosition: SnackPosition.BOTTOM,
+        );
+        return;
+      }
+    }
+
+    if (permission == LocationPermission.deniedForever) {
+      // 💡 Show dialog to open app settings
+      Get.defaultDialog(
+        title: "Location Required",
+        middleText:
+            "You have permanently denied location access. Please enable it from app settings.",
+        confirm: ElevatedButton(
+          onPressed: () {
+            Geolocator.openAppSettings();
+            Get.back();
+          },
+          child: Text("Open Settings"),
+        ),
+        cancel: TextButton(
+          onPressed: () {
+            Get.back();
+          },
+          child: Text("Cancel"),
+        ),
+      );
+      return;
+    }
+
+    Position position = await Geolocator.getCurrentPosition(
+      desiredAccuracy: LocationAccuracy.high,
+    );
+
+    initialPosition.value = LatLng(position.latitude, position.longitude);
+    startAddress.value = "Your current location";
+    startAddressController.text = startAddress.value;
   }
 
   @override
@@ -91,12 +151,17 @@ class _StylishViewState extends State<StartView>
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Text(
-                    'Enable Location Access',
+                  GestureDetector(
+                    onTap: () {
+                      _getCurrentLocation();
+                    },
+                    child: Text(
+                      'Enable Location Access',
 
-                    style: GoogleFonts.k2d(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
+                      style: GoogleFonts.k2d(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                   const SizedBox(height: 8),

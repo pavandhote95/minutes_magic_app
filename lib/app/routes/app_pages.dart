@@ -73,27 +73,7 @@ class AppPages {
       page: () => const ProfileView(),
       binding: ProfileBinding(),
     ),
-    // Uncomment when ready to use:
-    // GetPage(
-    //   name: Routes.registration,
-    //   page: () => const RegisterView(),
-    //   binding: RegisterBinding(),
-    // ),
-    // GetPage(
-    //   name: Routes.rotp,
-    //   page: () => const ResendotpView(),
-    //   binding: HomeBinding(),
-    // ),
-    // GetPage(
-    //   name: Routes.location,
-    //   page: () => const LocationView(),
-    //   binding: HomeBinding(),
-    // ),
-    // GetPage(
-    //   name: Routes.hair,
-    //   page: () => const HairView(),
-    //   binding: HairBinding(),
-    // ),
+
     GetPage(
       name: _Paths.PRODUCT_DETAILS,
       page: () => const ProductDetailsView(),

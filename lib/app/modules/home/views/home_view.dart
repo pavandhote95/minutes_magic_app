@@ -115,10 +115,10 @@ class HomePageContent extends StatelessWidget {
     {'name': 'Spices', 'icon': 'assets/images/spices.png'},
     {'name': 'Dry Fruits', 'icon': 'assets/images/Dry Fruits.png'},
     {'name': 'Rice', 'icon': 'assets/images/rice.png'},
-    {'name': 'Drinks', 'icon': 'assets/images/eggs.png'},
-    {'name': 'Eggs', 'icon': 'assets/images/bread.png'},
-    {'name': 'Bread', 'icon': 'assets/images/fruits.png'},
-    {'name': 'Fruits', 'icon': 'assets/images/drinks.png'},
+    {'name': 'Drinks', 'icon': 'assets/images/drinks.png'},
+    {'name': 'Eggs', 'icon': 'assets/images/eggs.png'},
+    {'name': 'Bread', 'icon': 'assets/images/bread.png'},
+    {'name': 'Fruits', 'icon': 'assets/images/fruits.png'},
     {'name': 'Vegetables', 'icon': 'assets/images/vegetable.png'},
   ];
 
@@ -126,10 +126,10 @@ class HomePageContent extends StatelessWidget {
     {'name': 'Spices', 'icon': 'assets/images/spices.png'},
     {'name': 'Dry Fruits', 'icon': 'assets/images/Dry Fruits.png'},
     {'name': 'Rice', 'icon': 'assets/images/rice.png'},
-    {'name': 'Drinks', 'icon': 'assets/images/eggs.png'},
-    {'name': 'Eggs', 'icon': 'assets/images/bread.png'},
-    {'name': 'Bread', 'icon': 'assets/images/fruits.png'},
-    {'name': 'Fruits', 'icon': 'assets/images/drinks.png'},
+    {'name': 'Drinks', 'icon': 'assets/images/drinks.png'},
+    {'name': 'Eggs', 'icon': 'assets/images/eggs.png'},
+    {'name': 'Bread', 'icon': 'assets/images/bread.png'},
+    {'name': 'Fruits', 'icon': 'assets/images/fruits.png'},
     {'name': 'Vegetables', 'icon': 'assets/images/vegetable.png'},
   ];
 
@@ -155,7 +155,7 @@ class HomePageContent extends StatelessWidget {
                 },
                 child: const Text(
                   'View All',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                 ),
               ),
             ],

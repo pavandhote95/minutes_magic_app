@@ -12,7 +12,13 @@ class ProfileView extends GetView<ProfileController> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         title: const Text("Profile"),
-        leading: const BackButton(),
+        centerTitle: true,
+        leading: GestureDetector(
+          onTap: () {
+            Get.back();
+          },
+          child: const Icon(Icons.arrow_back_ios),
+        ),
         actions: [
           IconButton(icon: const Icon(Icons.edit, size: 20), onPressed: () {}),
         ],
@@ -54,6 +60,7 @@ class ProfileView extends GetView<ProfileController> {
             "Transaction History",
             () {},
           ),
+
           _buildOptionTile(Icons.info_outline, "About app", () {}),
           _buildOptionTile(Icons.help_outline, "FAQ", () {}),
           _buildOptionTile(Icons.logout, "Log out", () {}),

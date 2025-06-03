@@ -14,12 +14,8 @@ class LoginView extends GetView<LoginController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(
-        255,
-        251,
-        245,
-        222,
-      ), // light green background
+      backgroundColor: Color(0xFFD0FFAD),
+      // light green background
       body: SingleChildScrollView(
         child: FadeInUp(
           duration: Duration(milliseconds: 2000),
@@ -43,7 +39,7 @@ class LoginView extends GetView<LoginController> {
                   vertical: 32,
                 ),
                 decoration: const BoxDecoration(
-                  color: Colors.amberAccent, // Slightly lighter green
+                  color: Color(0xFFBDFF8B), // Slightly lighter green
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(30),
                     topRight: Radius.circular(30),

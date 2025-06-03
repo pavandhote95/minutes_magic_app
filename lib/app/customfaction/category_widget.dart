@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 
 class CategoryPage extends StatelessWidget {
   const CategoryPage({super.key});
-
   final List<Map<String, String>> categories = const [
+
+
     {'icon': 'assets/icons/doctor.png', 'name': 'Doctor'},
     {'icon': 'assets/icons/food.png', 'name': 'Food'},
     {'icon': 'assets/icons/gym.png', 'name': 'Fitness'},
@@ -14,6 +15,7 @@ class CategoryPage extends StatelessWidget {
     {'icon': 'assets/icons/plumber.png', 'name': 'Plumber'},
     {'icon': 'assets/icons/tech.png', 'name': 'IT Support'},
     {'icon': 'assets/icons/tech.png', 'name': 'IT Support'},
+
   ];
 
   @override
@@ -33,6 +35,7 @@ class CategoryPage extends StatelessWidget {
 
 class CategoryGrid {
   static Widget buildCategoryGrid(List<Map<String, String>> list) {
+
     return GridView.builder(
       itemCount: list.length,
       shrinkWrap: true,
@@ -47,13 +50,16 @@ class CategoryGrid {
       itemBuilder: (context, index) {
         final item = list[index];
         return Padding(
+
           padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 8),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+
               SizedBox(
                 height: 90,
                 width: 100,
+
 
                 child: Image.asset(item['icon']!, fit: BoxFit.contain),
               ),
@@ -66,7 +72,10 @@ class CategoryGrid {
                   fontWeight: FontWeight.w600,
                   color: Colors.black87,
                 ),
+
+
               ),
+
             ],
           ),
         );

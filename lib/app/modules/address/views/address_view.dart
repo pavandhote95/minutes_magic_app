@@ -11,6 +11,7 @@ class AddressView extends GetView<AddressController> {
   @override
   Widget build(BuildContext context) {
     final AddressController controller = Get.put(AddressController());
+    final isKeyboardOpen = MediaQuery.of(context).viewInsets.bottom > 0;
 
     return Scaffold(
       resizeToAvoidBottomInset: true,
@@ -37,13 +38,17 @@ class AddressView extends GetView<AddressController> {
                               Obx(
                                 () => _locationField(
                                   Icons.radio_button_checked,
-                                  controller.startAddress.value,
+                                  controller.initialPosition.value == null
+                                      ? 'Fetching your current address...'
+                                      : controller.startAddress.value,
                                   controller: controller.startAddressController,
                                   readOnly: false,
                                   onChanged: controller.onAddressTyped,
                                 ),
                               ),
+
                               const SizedBox(height: 8),
+
                               _locationField(
                                 Icons.location_on_outlined,
                                 "Dropoff location",
@@ -62,7 +67,7 @@ class AddressView extends GetView<AddressController> {
                             if (controller.initialPosition.value == null) {
                               return Container(
                                 height:
-                                    MediaQuery.of(context).size.height * 0.4,
+                                    MediaQuery.of(context).size.height * 0.3,
                                 margin: const EdgeInsets.symmetric(
                                   horizontal: 16,
                                 ),
@@ -94,7 +99,9 @@ class AddressView extends GetView<AddressController> {
                         ),
 
                         const SizedBox(height: 16),
-                        _deliveryOptions(),
+                        !isKeyboardOpen
+                            ? _deliveryOptions()
+                            : SizedBox.shrink(),
                         const SizedBox(height: 16),
                       ],
                     ),
@@ -123,9 +130,10 @@ class AddressView extends GetView<AddressController> {
         Expanded(
           child: TextField(
             readOnly: readOnly,
-            controller: controller ?? TextEditingController(text: hint),
+            controller: controller,
             onChanged: onChanged,
             decoration: InputDecoration(
+              hintText: hint,
               filled: isFilled,
               fillColor: Colors.grey[100],
               contentPadding: const EdgeInsets.symmetric(
@@ -140,7 +148,15 @@ class AddressView extends GetView<AddressController> {
           ),
         ),
         const SizedBox(width: 4),
-        if (isFilled) const Icon(Icons.cancel, size: 18),
+        if (isFilled)
+          GestureDetector(
+            onTap: () {
+              if (controller != null) {
+                controller.clear();
+              }
+            },
+            child: const Icon(Icons.cancel, size: 18),
+          ),
       ],
     );
   }
