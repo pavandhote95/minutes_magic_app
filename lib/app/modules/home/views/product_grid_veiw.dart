@@ -60,7 +60,7 @@ class ProductGridPage extends StatelessWidget {
             crossAxisCount: 3,
             crossAxisSpacing: 28,
             mainAxisSpacing: 10,
-            childAspectRatio: 0.50,
+            childAspectRatio: 0.55,
           ),
           itemBuilder: (context, index) {
             final product = products[index];
@@ -121,6 +121,9 @@ class ProductGridPage extends StatelessWidget {
           },
         ),
       ),
+
+
+
     );
   }
 }

@@ -8,8 +8,10 @@ import 'package:minutes_magic_app/app/modules/delivery/views/delivery_view.dart'
 import 'package:minutes_magic_app/app/modules/home/controllers/home_controller.dart';
 import 'package:minutes_magic_app/app/modules/home/views/banner_carousel.dart';
 import 'package:minutes_magic_app/app/modules/home/views/cart_page.dart';
+import 'package:minutes_magic_app/app/modules/home/views/popular_shop_grid.dart';
 import 'package:minutes_magic_app/app/modules/home/views/product_grid_veiw.dart';
 import 'package:minutes_magic_app/app/modules/home/views/product_list.dart';
+import 'package:minutes_magic_app/app/modules/home/views/shop_grid.dart';
 import 'package:minutes_magic_app/app/modules/profile/views/profile_view.dart';
 import 'package:minutes_magic_app/app/modules/search/views/search_view.dart';
 
@@ -24,6 +26,7 @@ class _HomeViewState extends State<HomeView> {
   final controller = Get.put(HomeController());
   int _selectedIndex = 0;
   final List<Widget> _pages = [
+
     const HomePageContent(),
 
     DeliveryView(),
@@ -36,11 +39,13 @@ class _HomeViewState extends State<HomeView> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: _selectedIndex == 0 ? _buildHomeAppBar() : null,
-
-      // 🔥 1. Wrap your page in AnimatedSwitcher
+      appBar:
+          _selectedIndex == 0
+              ? _buildHomeAppBar()
+              : null, // 🔥 1. Wrap your page in AnimatedSwitcher
       body: KeyedSubtree(
         key: ValueKey(_selectedIndex),
+
         child: _pages[_selectedIndex],
       ),
 
@@ -52,6 +57,7 @@ class _HomeViewState extends State<HomeView> {
     backgroundColor: Colors.white,
     elevation: 0,
     leading: const Icon(Icons.location_on, color: Colors.red),
+
     title: Text(
       'Delivered Before You Know It\nP.N - 7 sector-15 , Mansarow...',
       style: GoogleFonts.poppins(fontSize: 14, color: Colors.black),
@@ -64,6 +70,7 @@ class _HomeViewState extends State<HomeView> {
     ],
   );
   Widget _buildBottomNavBar() {
+
     return Theme(
       data: Theme.of(context).copyWith(
         splashFactory: NoSplash.splashFactory,
@@ -141,7 +148,16 @@ class HomePageContent extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           BannerCarousel(),
-          const SizedBox(height: 16),
+          const SizedBox(height: 12),
+
+
+          const Text(
+            'Shop',
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 10),
+          SizedBox( height: MediaQuery.of(context).size.height * 0.35, // 40% of screen height
+              width: MediaQuery.of(context).size.width * 0.9, child: PopularShop()),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -173,18 +189,17 @@ class HomePageContent extends StatelessWidget {
 
           const SizedBox(height: 15),
           const Text(
-            'Producs',
+            'Products',
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
-          SizedBox(height: 350, width: 400, child: ProductGridPage()),
+          SizedBox(
+            height: MediaQuery.of(context).size.height * 0.4, // 40% of screen height
+            width: MediaQuery.of(context).size.width * 0.9,   // 90% of screen width
+            child: ProductGridPage(),
+          )
 
-          const SizedBox(height: 15),
-          const Text(
-            'Popular Shop',
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-          ),
-          const SizedBox(height: 15),
-          SizedBox(height: 350, width: 400, child: ProductGridPage()),
+
+
         ],
       ),
     );
@@ -205,7 +220,7 @@ class HomePageContent extends StatelessWidget {
         final item = list[index];
         final categoryName = item['name']!;
 
-        // Pick correct product list based on category
+        // Pick correct product list based on categor y
         List<ProductModel> selectedProducts = [];
         switch (categoryName) {
           case 'Rice':

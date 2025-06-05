@@ -9,7 +9,7 @@ class SplashController extends GetxController {
   }
 
   void _navigateAfterDelay() async {
-    await Future.delayed(const Duration(seconds: 0));
+    await Future.delayed(const Duration(seconds: 2));
 
     final prefs = await SharedPreferences.getInstance();
     bool hasSeenOnboarding = prefs.getBool('seen_stylish') ?? false;

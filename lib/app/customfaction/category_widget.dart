@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 
+import '../modules/allcategory/model/product_data.dart';
+import '../modules/allcategory/model/product_model.dart';
+import '../modules/home/views/product_list.dart';
+
 class CategoryPage extends StatelessWidget {
   const CategoryPage({super.key});
   final List<Map<String, String>> categories = const [
@@ -35,51 +39,84 @@ class CategoryPage extends StatelessWidget {
 
 class CategoryGrid {
   static Widget buildCategoryGrid(List<Map<String, String>> list) {
-
     return GridView.builder(
       itemCount: list.length,
-      shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      padding: const EdgeInsets.only(bottom: 20),
+      shrinkWrap: true,
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 3,
-        crossAxisSpacing: 10,
-        mainAxisSpacing: 10,
+        crossAxisCount: 4,
+        mainAxisSpacing: 8,
+        crossAxisSpacing: 12,
         childAspectRatio: 0.8,
       ),
       itemBuilder: (context, index) {
         final item = list[index];
-        return Padding(
+        final categoryName = item['name']!;
 
-          padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 8),
+        // Pick correct product list based on category
+        List<ProductModel> selectedProducts = [];
+        switch (categoryName) {
+          case 'Rice':
+            selectedProducts = riceProducts;
+            break;
+          case 'Drinks':
+            selectedProducts = drinkProducts;
+            break;
+          case 'Eggs':
+            selectedProducts = eggProducts;
+            break;
+          case 'Bread':
+            selectedProducts = breadProducts;
+            break;
+          case 'Fruits':
+            selectedProducts = fruitProducts;
+            break;
+          case 'Vegetables':
+            selectedProducts = vegetableProducts;
+            break;
+          case 'Spices':
+            selectedProducts = spiceProducts;
+            break;
+          case 'Dry Fruits':
+            selectedProducts = dryfruitProducts;
+            break;
+          default:
+            selectedProducts = [];
+        }
+
+        return GestureDetector(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder:
+                    (_) =>
+                    ProductList(
+                      category: categoryName,
+                      products: selectedProducts,
+                    ),
+              ),
+            );
+          },
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-
-              SizedBox(
-                height: 90,
-                width: 100,
-
-
-                child: Image.asset(item['icon']!, fit: BoxFit.contain),
-              ),
-              const SizedBox(height: 12),
-              Text(
-                item['name'] ?? '',
-                textAlign: TextAlign.center,
-                style: const TextStyle(
-                  fontSize: 13,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.black87,
+              Container(
+                height: 60,
+                width: 60,
+                decoration: BoxDecoration(
+                  color: Colors.grey.shade200,
+                  borderRadius: BorderRadius.circular(12),
                 ),
-
-
+                child: Image.asset(item['icon']!),
               ),
-
+              const SizedBox(height: 8),
+              Text(item['name']!, style: const TextStyle(fontSize: 12)),
             ],
           ),
         );
       },
     );
   }
+
+
 }

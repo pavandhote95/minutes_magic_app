@@ -4,6 +4,10 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:minutes_magic_app/app/constants/AppTextStyle.dart';
 import 'package:minutes_magic_app/app/modules/home/views/recent_products_grid.dart';
+import 'package:minutes_magic_app/app/modules/payment/views/payment_view.dart';
+
+import '../../payment/views/payment_option_view.dart';
+import '../../profile/views/profile_view.dart';
 
 class CartPage extends StatelessWidget {
   const CartPage({super.key});
@@ -196,6 +200,7 @@ class CartPage extends StatelessWidget {
             height: 50,
             child: ElevatedButton(
               onPressed: () {
+                _showCheckoutBottomSheet(context, totalPrice);
                 // Handle checkout action
               },
               style: ElevatedButton.styleFrom(
@@ -213,29 +218,15 @@ class CartPage extends StatelessWidget {
                         alignment: Alignment.center,
                         child: Text(
                           'Checkout',
-                          style: const TextStyle(
+                          style: GoogleFonts.poppins(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
                             fontSize: 16,
                           ),
                         ),
+
                       ),
-                      Positioned(
-                        right: 16,
-                        top: 0,
-                        bottom: 0,
-                        child: Align(
-                          alignment: Alignment.centerRight,
-                          child: Text(
-                            '\$${totalPrice.toStringAsFixed(2)}',
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16,
-                            ),
-                          ),
-                        ),
-                      ),
+
                     ],
                   );
                 },
@@ -246,4 +237,159 @@ class CartPage extends StatelessWidget {
       ),
     );
   }
+  // Place this in your CartPage inside onTap of 'Place Order' button:
+  void _showCheckoutBottomSheet(BuildContext context, double totalPrice) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.white,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+      ),
+      builder: (context) {
+        return Padding(
+          padding: EdgeInsets.only(
+            left: 20,
+            right: 20,
+            top: 16,
+            bottom: MediaQuery.of(context).viewInsets.bottom + 24,
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Row(
+                children: [
+                  Text(
+                    "Checkout",
+                    style: GoogleFonts.poppins(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 20,
+                      color: Colors.black,
+                    ),
+                  ),
+                  const Spacer(),
+                  IconButton(
+                    icon: const Icon(Icons.close, color: Colors.grey),
+                    onPressed: () => Navigator.pop(context),
+                  ),
+                ],
+              ),
+              const Divider(thickness: 1.2),
+
+              /// Delivery
+              _buildOptionTile(
+                title: "Delivery",
+                subtitle: "Select Method",
+                icon: Icons.local_shipping_outlined,
+                onTap: () {},
+              ),
+
+              /// Payment
+              _buildOptionTile(
+                title: "Payment",
+                icon: Icons.payment_outlined,
+                onTap: () => Get.to(() => const PaymentOptionScreen()),
+              ),
+
+              /// Promo Code
+              _buildOptionTile(
+                title: "Promo Code",
+                subtitle: "Pick discount",
+                icon: Icons.discount_outlined,
+                onTap: () {},
+              ),
+
+              /// Total Cost
+              ListTile(
+                contentPadding: EdgeInsets.zero,
+                title: Text("Total Cost",
+                    style: GoogleFonts.poppins(fontSize: 15)),
+                trailing: Text(
+                  "₹${totalPrice.toStringAsFixed(2)}",
+                  style: GoogleFonts.poppins(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 15,
+                  ),
+                ),
+              ),
+
+              const SizedBox(height: 12),
+              RichText(
+                textAlign: TextAlign.center,
+                text: TextSpan(
+                  text: "By placing an order you agree to our\n",
+                  style: GoogleFonts.poppins(fontSize: 11, color: Colors.grey),
+                  children: [
+                    TextSpan(
+                      text: "Terms and Conditions",
+                      style: GoogleFonts.poppins(
+                        color: const Color(0xFF227D25),
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 18),
+              SizedBox(
+                width: double.infinity,
+                height: 50,
+                child: ElevatedButton.icon(
+
+                  label: Text(
+                    "Place Order",
+                    style: GoogleFonts.poppins(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                      color: Colors.white,
+                    ),
+                  ),
+                  onPressed: () {
+                    Navigator.pop(context);
+                    // Final order placement logic
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFF227D25),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  /// Custom ListTile with icon and optional subtitle
+  Widget _buildOptionTile({
+    required String title,
+    String? subtitle,
+    required IconData icon,
+    required VoidCallback onTap,
+  }) {
+    return ListTile(
+      contentPadding: EdgeInsets.zero,
+      title: Text(
+        title,
+        style: GoogleFonts.poppins(fontSize: 14),
+      ),
+      trailing: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          if (subtitle != null)
+            Text(subtitle,
+                style: GoogleFonts.poppins(fontSize: 13, color: Colors.black54)),
+          const SizedBox(width: 6),
+          Icon(icon, size: 20, color: Colors.grey[700]),
+          const SizedBox(width: 4),
+          const Icon(Icons.arrow_forward_ios, size: 16, color: Colors.grey),
+        ],
+      ),
+      onTap: onTap,
+    );
+  }
+
 }

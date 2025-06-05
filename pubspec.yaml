@@ -45,11 +45,18 @@ dependencies:
   geolocator: ^14.0.1
   geocoding: ^4.0.0
   fluttertoast: ^8.2.12
+  flutter_launcher_icons: ^0.14.3
 
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/icon/icon.png" # fallback for older devices
+  adaptive_icon_foreground: "assets/icon/icon_foreground.png"
+  adaptive_icon_background: "#fcd200"
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is

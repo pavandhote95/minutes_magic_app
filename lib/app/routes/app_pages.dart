@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 
 import '../modules/address/bindings/address_binding.dart';
 import '../modules/address/views/address_view.dart';
+import '../modules/allcategory/model/product_model.dart';
 import '../modules/delivery/bindings/delivery_binding.dart';
 import '../modules/delivery/views/delivery_view.dart';
 import '../modules/home/bindings/home_binding.dart';
@@ -31,13 +32,17 @@ class AppPages {
     GetPage(
       name: Routes.address,
       page: () => const AddressView(),
-      binding: AddressBinding(), // Consider creating an OtpBinding if needed
+      binding: AddressBinding(),
+
+      // Consider creating an OtpBinding if needed
     ),
+
     GetPage(
       name: Routes.otp,
       page: () => const OtpView(),
       binding: OtpBinding(), // Consider creating an OtpBinding if needed
     ),
+
     GetPage(
       name: Routes.home,
       page: () => const HomeView(),
@@ -76,8 +81,13 @@ class AppPages {
 
     GetPage(
       name: _Paths.PRODUCT_DETAILS,
-      page: () => const ProductDetailsView(),
+      page: () {
+        // Get.arguments contains the product passed during navigation
+        final product = Get.arguments as ProductModel;
+        return ProductDetailsView(product: product);
+      },
       binding: ProductDetailsBinding(),
     ),
+
   ];
 }

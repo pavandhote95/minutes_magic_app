@@ -46,16 +46,17 @@ class KTextStyle {
     required FontWeight fw,
   }) => GoogleFonts.poppins(fontWeight: fw, fontSize: fs, color: c);
 
-  static lato({required double fs, required Color c, required FontWeight fw}) =>
-      GoogleFonts.lato(fontWeight: fw, fontSize: fs, color: c);
+  static lato({
+    required double fs,
+    required Color c,
+    required FontWeight fw,
+  }) => GoogleFonts.lato(fontWeight: fw, fontSize: fs, color: c);
 
   static aclonica({
     required double fs,
     required Color c,
     required FontWeight fw,
   }) => GoogleFonts.aclonica(fontWeight: fw, fontSize: fs, color: c);
-
-  // New Fonts Below
 
   static roboto({
     required double fs,
@@ -86,4 +87,10 @@ class KTextStyle {
     required Color c,
     required FontWeight fw,
   }) => GoogleFonts.rajdhani(fontWeight: fw, fontSize: fs, color: c);
+
+  static alata({
+    required double fs,
+    required Color c,
+    required FontWeight fw,
+  }) => GoogleFonts.alata(fontWeight: fw, fontSize: fs, color: c);
 }

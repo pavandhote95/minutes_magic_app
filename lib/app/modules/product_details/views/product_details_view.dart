@@ -1,193 +1,266 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:minutes_magic_app/app/constants/AppTextStyle.dart';
 import 'package:minutes_magic_app/app/modules/home/views/cart_page.dart';
 import '../controllers/product_details_controller.dart';
+import 'package:minutes_magic_app/app/modules/allcategory/model/product_model.dart';
 
 class ProductDetailsView extends GetView<ProductDetailsController> {
-  const ProductDetailsView({super.key});
+  final ProductModel product;
+
+  const ProductDetailsView({super.key, required this.product});
 
   @override
   Widget build(BuildContext context) {
+    bool showDetails = true;
+    bool showReviews = false;
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      Get.back();
-                    },
-                    child: const Icon(Icons.arrow_back_ios),
-                  ),
-                  SizedBox(width: 70),
-                  Text(
-                    "Product Detail",
-                    style: AppTextStyle.Bold(fontSize: 20),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 20),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Expanded(
-                    flex: 2,
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(8),
-                      child: Image.asset(
-                        'assets/images/spicedetail.png',
-                        height: 200,
-                        fit: BoxFit.cover,
+        child: StatefulBuilder(
+          builder: (context, setState) => SingleChildScrollView(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Back button and title
+                Row(
+                  children: [
+                    GestureDetector(
+                      onTap: () => Get.back(),
+                      child: const Icon(Icons.arrow_back_ios_new, size: 18),
+                    ),
+                    const SizedBox(width: 12),
+                    Text(
+                      "Product Detail",
+                      style: GoogleFonts.poppins(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w600,
                       ),
                     ),
-                  ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: Column(
-                      children: List.generate(2, (index) {
-                        return Padding(
-                          padding: const EdgeInsets.only(bottom: 8),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(8),
-                            child: Image.asset(
-                              'assets/images/spices.png',
-                              height: 80,
-                              fit: BoxFit.cover,
-                            ),
+                  ],
+                ),
+                const SizedBox(height: 20),
+
+                // Product images
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(
+                      flex: 2,
+                      child: Hero(
+                          tag: 'product-image-${product.name}',
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(10),
+                          child: Image.asset(
+                            product.image,
+                            height: 210,
+                            fit: BoxFit.cover,
                           ),
-                        );
-                      }),
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 20),
-              Text(
-                "SPICEY NAMKEEN",
-                style: GoogleFonts.aboreto(color: Colors.black, fontSize: 18),
-              ),
-              const SizedBox(height: 8),
-              Row(
-                children: const [
-                  Text("MRP :\$ 30", style: TextStyle(fontSize: 16)),
-                  SizedBox(width: 10),
-                  Text(
-                    "40% OFF",
-                    style: TextStyle(color: Colors.green, fontSize: 16),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 10),
-              Text(
-                "LAKMÉ ABSOLUTE SKIN DEW SERUM FOUNDATION WARM CREME, FULL, ALL SKIN TYPE, 30G : BUY ONLINE AT BEST",
-                style: GoogleFonts.aboreto(color: Colors.black, fontSize: 14),
-              ),
-              const SizedBox(height: 20),
-              Row(
-                children: [
-                  Expanded(
-                    child: ElevatedButton(
-                      onPressed: () {
-                        Get.to(CartPage());
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.red,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                      ),
-                      child: Text(
-                        "Add To Cart",
-                        style: GoogleFonts.alata(
-                          color: Colors.white,
-                          fontSize: 14,
                         ),
                       ),
                     ),
-                  ),
-                  const SizedBox(width: 10),
-                  Expanded(
-                    child: OutlinedButton(
-                      onPressed: () {},
-                      style: OutlinedButton.styleFrom(
-                        foregroundColor: Colors.red,
-                        side: const BorderSide(color: Colors.red),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                      ),
-                      child: Text(
-                        "Place Order",
-                        style: GoogleFonts.albertSans(
-                          color: Colors.redAccent,
-                          fontSize: 14,
-                        ),
+                    const SizedBox(width: 10),
+                    Expanded(
+                      flex: 1,
+                      child: Column(
+                        children: [
+                          for (int i = 0; i < 2; i++) ...[
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(10),
+                              child: Image.asset(
+                                product.image,
+                                height: 90,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                            if (i == 0) const SizedBox(height: 10),
+                          ],
+                        ],
                       ),
                     ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 20),
-              ExpansionTile(
-                title: Text(
-                  "PRODUCT DETAILS",
-                  style: GoogleFonts.aboreto(
-                    color: Colors.black,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w400,
+                  ],
+                ),
+                const SizedBox(height: 20),
+
+                // Product name
+                Text(
+                  product.name.toUpperCase(),
+                  style: GoogleFonts.poppins(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
-                initiallyExpanded: true,
-                children: const [
-                  DetailRow(label: "brand", value: "Bikaji"),
-                  DetailRow(label: "product type", value: "Food"),
-                  DetailRow(label: "smudge proof", value: "Yes"),
-                  DetailRow(label: "colour name", value: "Black"),
-                  DetailRow(label: "transfer proof", value: "Yes"),
-                ],
-              ),
-              ExpansionTile(
-                title: const Text("REVIEWS"),
-                children: const [
-                  Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Text("No reviews yet."),
+
+                const SizedBox(height: 10),
+
+                // Price and discount
+                Row(
+                  children: [
+                    Text(
+                      "MRP: ₹${product.oldPrice ?? product.price}",
+                      style: GoogleFonts.poppins(
+                        fontSize: 14,
+                        color: Colors.grey,
+                        decoration: TextDecoration.lineThrough,
+                      ),
+                    ),
+                    const SizedBox(width: 10),
+                    if (product.oldPrice != null)
+                      Text(
+                        "${((1 - product.price / product.oldPrice!) * 100).round()}% OFF",
+                        style: GoogleFonts.poppins(
+                          color: Colors.green,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 14,
+                        ),
+                      ),
+                  ],
+                ),
+                const SizedBox(height: 8),
+
+                // Short description
+                Text(
+                  "LAKMÉ ABSOLUTE SKIN DEW SERUM FOUNDATION WARM CREME, FULL, ALL SKIN TYPE, 30G : BUY ONLINE AT BEST",
+                  style: GoogleFonts.poppins(
+                    fontSize: 12.5,
+                    color: Colors.black54,
                   ),
+                ),
+                const SizedBox(height: 20),
+
+                // Buttons
+                Row(
+                  children: [
+                    Expanded(
+                      child: ElevatedButton(
+                        onPressed: () => Get.to(() => const CartPage()),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: const Color(0xffff4d4d),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          padding: const EdgeInsets.symmetric(vertical: 14),
+                        ),
+                        child: Text(
+                          "Add To Cart",
+                          style: GoogleFonts.poppins(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 13.5,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 10),
+                    Expanded(
+                      child: OutlinedButton(
+                        onPressed: () {},
+                        style: OutlinedButton.styleFrom(
+                          foregroundColor: Colors.red,
+                          side: const BorderSide(color: Colors.red),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          padding: const EdgeInsets.symmetric(vertical: 14),
+                        ),
+                        child: Text(
+                          "Place Order",
+                          style: GoogleFonts.poppins(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 13.5,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+
+                const SizedBox(height: 30),
+
+                // Product Details Toggle
+                GestureDetector(
+                  onTap: () => setState(() => showDetails = !showDetails),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text("PRODUCT DETAILS",
+                          style: GoogleFonts.poppins(
+                              fontWeight: FontWeight.w600, fontSize: 14)),
+                      Icon(
+                        showDetails
+                            ? Icons.keyboard_arrow_down
+                            : Icons.keyboard_arrow_up,
+                        size: 26,
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 10),
+
+                if (showDetails) ...[
+                  productDetailRow("brand", "Bikaji"),
+                  productDetailRow("product type", "Food"),
+                  productDetailRow("smudge proof", "Yes"),
+                  productDetailRow("colour name", "Black"),
+                  productDetailRow("transfer proof", "Yes"),
+                  const SizedBox(height: 20),
                 ],
-              ),
-            ],
+
+                // Reviews Toggle
+                GestureDetector(
+                  onTap: () => setState(() => showReviews = !showReviews),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text("REVIEWS",
+                          style: GoogleFonts.poppins(
+                              fontWeight: FontWeight.w600, fontSize: 14)),
+                      Icon(
+                        showReviews
+                            ? Icons.keyboard_arrow_down
+                            : Icons.keyboard_arrow_up,
+                        size: 26,
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 10),
+
+                if (showReviews)
+                  Text(
+                    "No reviews yet.",
+                    style: GoogleFonts.poppins(
+                      fontSize: 13,
+                      color: Colors.grey,
+                    ),
+                  ),
+              ],
+            ),
           ),
         ),
       ),
     );
   }
-}
 
-class DetailRow extends StatelessWidget {
-  final String label;
-  final String value;
-
-  const DetailRow({super.key, required this.label, required this.value});
-
-  @override
-  Widget build(BuildContext context) {
+  // Reusable row for product details
+  Widget productDetailRow(String title, String value) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+      padding: const EdgeInsets.symmetric(vertical: 5),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(
-            label,
-            style: GoogleFonts.akatab(color: Colors.black, fontSize: 14),
-          ),
-          Text(value),
+          Text(title,
+              style: GoogleFonts.poppins(
+                fontSize: 13,
+                color: Colors.black54,
+              )),
+          Text(value,
+              style: GoogleFonts.poppins(
+                fontSize: 13,
+                fontWeight: FontWeight.w500,
+              )),
         ],
       ),
     );

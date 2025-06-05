@@ -62,7 +62,7 @@ class AddressView extends GetView<AddressController> {
                         const SizedBox(height: 10),
 
                         /// Google Map
-                        Expanded(
+                            Expanded(
                           child: Obx(() {
                             if (controller.initialPosition.value == null) {
                               return Container(
