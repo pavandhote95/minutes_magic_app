@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 
 import '../../../constants/text_style.dart';
 
@@ -64,9 +66,30 @@ class _CardPaymentScreenState extends State<CardPaymentScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Debit / Credit Card"),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new, color: Colors.black),
-          onPressed: () => Navigator.pop(context),
+        leading: Padding(
+          padding: const EdgeInsets.all(8),
+          child: InkWell(
+            onTap: () {
+              Get.back();
+            },
+            child: Container(
+              height: 28,
+              width: 28,
+
+              decoration: BoxDecoration(
+
+                color: const Color.fromARGB(224, 244, 243, 243),
+                borderRadius: BorderRadius.circular(30),
+              ),
+              child: const Center(
+                child: Icon(
+                  Icons.arrow_back_ios,
+                  color: Colors.black54,
+                  size: 18,
+                ),
+              ),
+            ),
+          ),
         ),
         backgroundColor: Colors.white,
         elevation: 0,

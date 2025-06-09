@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:minutes_magic_app/app/constants/AppTextStyle.dart';
 import 'package:minutes_magic_app/app/modules/allcategory/model/product_model.dart';
+import 'package:minutes_magic_app/app/modules/cart/controllers/cart_controller.dart';
 import 'package:minutes_magic_app/app/modules/product_details/views/product_details_view.dart';
 
 class ProductList extends StatelessWidget {
@@ -16,15 +18,37 @@ class ProductList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Get.put(CartController());
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title: Text(category, style: AppTextStyle.Bold(fontSize: 20)),
+        title: Text(
+          category,
+          style: GoogleFonts.poppins(
+            fontSize: 20,
+
+            color: Colors.black54,
+          ),
+        ),
         centerTitle: true,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios),
-          onPressed: () => Get.back(),
+        leading: Padding(
+          padding: const EdgeInsets.only(left: 10, top: 8, bottom: 8, right: 8),
+          child: InkWell(
+            onTap: () => Get.back(),
+            borderRadius: BorderRadius.circular(30),
+            child: Container(
+              height: 80,
+              width: 80,
+              decoration: const BoxDecoration(
+                color: Color(0xFFF1F1F1),
+                shape: BoxShape.circle,
+              ),
+              child: const Center(
+                child: Icon(Icons.arrow_back_ios, color: Colors.black87, size: 16),
+              ),
+            ),
+          ),
         ),
         actions: [
           IconButton(
@@ -34,80 +58,107 @@ class ProductList extends StatelessWidget {
         ],
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         child: GridView.builder(
           itemCount: products.length,
-          physics: const NeverScrollableScrollPhysics(),
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 3,
-            crossAxisSpacing: 28,
-            mainAxisSpacing: 10,
-            childAspectRatio: 0.55,
+            crossAxisCount: 2,
+            crossAxisSpacing: 16,
+            mainAxisSpacing: 16,
+            childAspectRatio: 0.7,
           ),
           itemBuilder: (context, index) {
             final product = products[index];
-            return Container(
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  AspectRatio(
-                    aspectRatio: 1,
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(8),
-                      child: GestureDetector(
-                        onTap: () {
-                          Get.to(() => ProductDetailsView(product: product));
-                        },
+
+            return GestureDetector(
+              onTap: () {
+                Get.to(() => ProductDetailsView(product: product));
+              },
+              child: Container(
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.grey.shade200),
+                  borderRadius: BorderRadius.circular(12),
+                  color: Colors.white,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(
+                      child: Center(
                         child: Hero(
                           tag: 'product-image-${product.name}',
                           child: Image.asset(
                             product.image,
-                            fit: BoxFit.cover,
+                            height: 80,
+                            fit: BoxFit.contain,
                           ),
                         ),
                       ),
                     ),
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    product.name,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.w600,
-                      fontSize: 10,
-                    ),
-                  ),
-                  const SizedBox(height: 4),
-                  Row(
-                    children: [
-                      Text(
-                        '₹ ${product.price}',
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 11,
-                        ),
-                      ),
-                      const SizedBox(width: 6),
-                      if (product.oldPrice != null)
-                        Text(
-                          '₹ ${product.oldPrice}',
-                          style: const TextStyle(
-                            color: Colors.grey,
-                            decoration: TextDecoration.lineThrough,
-                            fontSize: 11,
-                          ),
-                        ),
-                    ],
-                  ),
-                  if (product.unit != null)
+                    const SizedBox(height: 8),
                     Text(
-                      product.unit!,
-                      style: const TextStyle(color: Colors.grey, fontSize: 11),
+                      product.name,
+                      style: GoogleFonts.poppins(
+                        fontSize: 14,
+
+                        color: Colors.black,
+                      ),
+                      maxLines: 2,
                     ),
-                ],
+                    if (product.unit != null)
+                      Text(
+                        product.unit!,
+                        style: GoogleFonts.poppins(
+                          fontSize: 13,
+                          color: Colors.grey[600],
+                        ),
+                      ),
+                    const SizedBox(height: 6),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              '₹ ${product.price}',
+                              style: GoogleFonts.poppins(
+                                fontSize: 15,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                            if (product.oldPrice != null)
+                              Text(
+                                '₹ ${product.oldPrice}',
+                                style: GoogleFonts.poppins(
+                                  fontSize: 12,
+                                  color: Colors.grey,
+                                  decoration: TextDecoration.lineThrough,
+                                ),
+                              ),
+                          ],
+                        ),
+                        Container(
+                          height: 32,
+                          width: 32,
+                          decoration: BoxDecoration(
+                            color: const Color.fromARGB(255, 34, 125, 37),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: IconButton(
+                            onPressed: () {
+                              Get.find<CartController>().addToCart(product);
+                            },
+                            icon: const Icon(Icons.add, color: Colors.white),
+                            iconSize: 18,
+                            padding: EdgeInsets.zero,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             );
           },

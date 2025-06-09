@@ -1,8 +1,11 @@
 import 'package:get/get.dart';
+import 'package:minutes_magic_app/app/modules/address/views/delivery_address.dart' hide DeliveryAddressView;
 
 import '../modules/address/bindings/address_binding.dart';
 import '../modules/address/views/address_view.dart';
 import '../modules/allcategory/model/product_model.dart';
+import '../modules/cart/bindings/cart_binding.dart';
+import '../modules/cart/views/cart_view.dart';
 import '../modules/delivery/bindings/delivery_binding.dart';
 import '../modules/delivery/views/delivery_view.dart';
 import '../modules/home/bindings/home_binding.dart';
@@ -31,18 +34,16 @@ class AppPages {
   static final routes = [
     GetPage(
       name: Routes.address,
-      page: () => const AddressView(),
+      page: () => const DeliveryAddressView(),
       binding: AddressBinding(),
 
       // Consider creating an OtpBinding if needed
     ),
-
     GetPage(
       name: Routes.otp,
       page: () => const OtpView(),
       binding: OtpBinding(), // Consider creating an OtpBinding if needed
     ),
-
     GetPage(
       name: Routes.home,
       page: () => const HomeView(),
@@ -78,7 +79,6 @@ class AppPages {
       page: () => const ProfileView(),
       binding: ProfileBinding(),
     ),
-
     GetPage(
       name: _Paths.PRODUCT_DETAILS,
       page: () {
@@ -88,6 +88,10 @@ class AppPages {
       },
       binding: ProductDetailsBinding(),
     ),
-
+    GetPage(
+      name: _Paths.CART,
+      page: () => const CartView(),
+      binding: CartBinding(),
+    ),
   ];
 }

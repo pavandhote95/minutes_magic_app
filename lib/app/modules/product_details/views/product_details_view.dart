@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:minutes_magic_app/app/modules/home/views/cart_page.dart';
+import 'package:minutes_magic_app/app/modules/cart/controllers/cart_controller.dart';
+import 'package:minutes_magic_app/app/modules/cart/views/cart_view.dart';
+import '../../../customfaction/snac_bar.dart';
 import '../controllers/product_details_controller.dart';
 import 'package:minutes_magic_app/app/modules/allcategory/model/product_model.dart';
 
@@ -14,253 +16,290 @@ class ProductDetailsView extends GetView<ProductDetailsController> {
   Widget build(BuildContext context) {
     bool showDetails = true;
     bool showReviews = false;
+    final CartController cartController = Get.find<CartController>();
 
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
         child: StatefulBuilder(
-          builder: (context, setState) => SingleChildScrollView(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // Back button and title
-                Row(
-                  children: [
-                    GestureDetector(
-                      onTap: () => Get.back(),
-                      child: const Icon(Icons.arrow_back_ios_new, size: 18),
-                    ),
-                    const SizedBox(width: 12),
-                    Text(
-                      "Product Detail",
-                      style: GoogleFonts.poppins(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ],
+          builder:
+              (context, setState) => SingleChildScrollView(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 16,
                 ),
-                const SizedBox(height: 20),
-
-                // Product images
-                Row(
+                child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Expanded(
-                      flex: 2,
-                      child: Hero(
-                          tag: 'product-image-${product.name}',
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(10),
-                          child: Image.asset(
-                            product.image,
-                            height: 210,
-                            fit: BoxFit.cover,
+                    // Back button and title
+                    Row(
+                      children: [
+                        InkWell(
+                          onTap: () => Get.back(),
+                          borderRadius: BorderRadius.circular(30),
+                          child: Container(
+                            height: 40,
+                            width: 40,
+                            decoration: BoxDecoration(
+                              color: const Color(0xFFF1F1F1),
+                              shape: BoxShape.circle,
+                            ),
+                            child: const Icon(
+                              Icons.arrow_back_ios_new_rounded,
+                              size: 18,
+                              color: Colors.black54,
+                            ),
                           ),
                         ),
-                      ),
+                        const Spacer(),
+                        Text(
+                          "Product Detail",
+                          style: GoogleFonts.poppins(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.black87,
+                          ),
+                        ),
+                        const Spacer(flex: 2),
+                      ],
                     ),
-                    const SizedBox(width: 10),
-                    Expanded(
-                      flex: 1,
-                      child: Column(
-                        children: [
-                          for (int i = 0; i < 2; i++) ...[
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(10),
+                    const SizedBox(height: 20),
+
+                    // Product images
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          flex: 2,
+                          child: Hero(
+                            tag: 'product-image-${product.name}',
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(12),
                               child: Image.asset(
                                 product.image,
-                                height: 90,
+                                height: 220,
                                 fit: BoxFit.cover,
                               ),
                             ),
-                            if (i == 0) const SizedBox(height: 10),
-                          ],
-                        ],
-                      ),
+                          ),
+                        ),
+                        const SizedBox(width: 10),
+                        Expanded(
+                          flex: 1,
+                          child: Column(
+                            children: List.generate(2, (i) {
+                              return Padding(
+                                padding: EdgeInsets.only(
+                                  bottom: i == 0 ? 10 : 0,
+                                ),
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(10),
+                                  child: Image.asset(
+                                    product.image,
+                                    height: 100,
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              );
+                            }),
+                          ),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-                const SizedBox(height: 20),
+                    const SizedBox(height: 20),
 
-                // Product name
-                Text(
-                  product.name.toUpperCase(),
-                  style: GoogleFonts.poppins(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-
-                const SizedBox(height: 10),
-
-                // Price and discount
-                Row(
-                  children: [
+                    // Product name
                     Text(
-                      "MRP: ₹${product.oldPrice ?? product.price}",
+                      product.name.toUpperCase(),
                       style: GoogleFonts.poppins(
-                        fontSize: 14,
-                        color: Colors.grey,
-                        decoration: TextDecoration.lineThrough,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
                       ),
                     ),
-                    const SizedBox(width: 10),
-                    if (product.oldPrice != null)
+                    const SizedBox(height: 8),
+
+                    // Price and discount
+                    Row(
+                      children: [
+                        Text(
+                          "MRP: ₹${product.oldPrice ?? product.price}",
+                          style: GoogleFonts.poppins(
+                            fontSize: 14,
+                            color: Colors.grey,
+                            decoration: TextDecoration.lineThrough,
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                        if (product.oldPrice != null)
+                          Text(
+                            "${((1 - product.price / product.oldPrice!) * 100).round()}% OFF",
+                            style: GoogleFonts.poppins(
+                              color: Colors.green,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 14,
+                            ),
+                          ),
+                      ],
+                    ),
+                    const SizedBox(height: 6),
+
+                    // Short description
+                    Text(
+                      "LAKMÉ ABSOLUTE SKIN DEW SERUM FOUNDATION WARM CREME, FULL, ALL SKIN TYPE, 30G : BUY ONLINE AT BEST",
+                      style: GoogleFonts.poppins(
+                        fontSize: 13,
+                        color: Colors.black54,
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+
+                    // Buttons
+                    Row(
+                      children: [
+                        Expanded(
+                          child: ElevatedButton(
+                            onPressed: () {
+                              cartController.addToCart(product);
+                              Utils.showToast("Product Added Successfully");
+
+
+                              Get.to(() => const CartView());
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: const Color(0xffff4d4d),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              padding: const EdgeInsets.symmetric(vertical: 14),
+                            ),
+                            child: Text(
+                              "Add To Cart",
+                              style: GoogleFonts.poppins(
+                                fontWeight: FontWeight.w600,
+                                fontSize: 14,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 10),
+                        Expanded(
+                          child: OutlinedButton(
+                            onPressed: () {
+                              cartController.addToCart(product);
+                              Get.to(() => const CartView());
+                            },
+                            style: OutlinedButton.styleFrom(
+                              foregroundColor: Colors.red,
+                              side: const BorderSide(color: Colors.red),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              padding: const EdgeInsets.symmetric(vertical: 14),
+                            ),
+                            child: Text(
+                              "Place Order",
+                              style: GoogleFonts.poppins(
+                                fontWeight: FontWeight.w600,
+                                fontSize: 14,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 30),
+
+                    // PRODUCT DETAILS toggle
+                    _toggleSection(
+                      title: "PRODUCT DETAILS",
+                      isExpanded: showDetails,
+                      onTap: () => setState(() => showDetails = !showDetails),
+                    ),
+                    if (showDetails) ...[
+                      const SizedBox(height: 10),
+                      _productDetailRow("Brand", "Bikaji"),
+                      _productDetailRow("Product Type", "Food"),
+                      _productDetailRow("Smudge Proof", "Yes"),
+                      _productDetailRow("Colour Name", "Black"),
+                      _productDetailRow("Transfer Proof", "Yes"),
+                    ],
+                    const SizedBox(height: 20),
+
+                    // REVIEWS toggle
+                    _toggleSection(
+                      title: "REVIEWS",
+                      isExpanded: showReviews,
+                      onTap: () => setState(() => showReviews = !showReviews),
+                    ),
+                    if (showReviews) ...[
+                      const SizedBox(height: 10),
                       Text(
-                        "${((1 - product.price / product.oldPrice!) * 100).round()}% OFF",
+                        "No reviews yet.",
                         style: GoogleFonts.poppins(
-                          color: Colors.green,
-                          fontWeight: FontWeight.w600,
-                          fontSize: 14,
+                          fontSize: 13,
+                          color: Colors.grey,
                         ),
-                      ),
-                  ],
-                ),
-                const SizedBox(height: 8),
-
-                // Short description
-                Text(
-                  "LAKMÉ ABSOLUTE SKIN DEW SERUM FOUNDATION WARM CREME, FULL, ALL SKIN TYPE, 30G : BUY ONLINE AT BEST",
-                  style: GoogleFonts.poppins(
-                    fontSize: 12.5,
-                    color: Colors.black54,
-                  ),
-                ),
-                const SizedBox(height: 20),
-
-                // Buttons
-                Row(
-                  children: [
-                    Expanded(
-                      child: ElevatedButton(
-                        onPressed: () => Get.to(() => const CartPage()),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xffff4d4d),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          padding: const EdgeInsets.symmetric(vertical: 14),
-                        ),
-                        child: Text(
-                          "Add To Cart",
-                          style: GoogleFonts.poppins(
-                            fontWeight: FontWeight.w600,
-                            fontSize: 13.5,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: 10),
-                    Expanded(
-                      child: OutlinedButton(
-                        onPressed: () {},
-                        style: OutlinedButton.styleFrom(
-                          foregroundColor: Colors.red,
-                          side: const BorderSide(color: Colors.red),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          padding: const EdgeInsets.symmetric(vertical: 14),
-                        ),
-                        child: Text(
-                          "Place Order",
-                          style: GoogleFonts.poppins(
-                            fontWeight: FontWeight.w600,
-                            fontSize: 13.5,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-
-                const SizedBox(height: 30),
-
-                // Product Details Toggle
-                GestureDetector(
-                  onTap: () => setState(() => showDetails = !showDetails),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text("PRODUCT DETAILS",
-                          style: GoogleFonts.poppins(
-                              fontWeight: FontWeight.w600, fontSize: 14)),
-                      Icon(
-                        showDetails
-                            ? Icons.keyboard_arrow_down
-                            : Icons.keyboard_arrow_up,
-                        size: 26,
                       ),
                     ],
-                  ),
+                  ],
                 ),
-                const SizedBox(height: 10),
-
-                if (showDetails) ...[
-                  productDetailRow("brand", "Bikaji"),
-                  productDetailRow("product type", "Food"),
-                  productDetailRow("smudge proof", "Yes"),
-                  productDetailRow("colour name", "Black"),
-                  productDetailRow("transfer proof", "Yes"),
-                  const SizedBox(height: 20),
-                ],
-
-                // Reviews Toggle
-                GestureDetector(
-                  onTap: () => setState(() => showReviews = !showReviews),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text("REVIEWS",
-                          style: GoogleFonts.poppins(
-                              fontWeight: FontWeight.w600, fontSize: 14)),
-                      Icon(
-                        showReviews
-                            ? Icons.keyboard_arrow_down
-                            : Icons.keyboard_arrow_up,
-                        size: 26,
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 10),
-
-                if (showReviews)
-                  Text(
-                    "No reviews yet.",
-                    style: GoogleFonts.poppins(
-                      fontSize: 13,
-                      color: Colors.grey,
-                    ),
-                  ),
-              ],
-            ),
-          ),
+              ),
         ),
       ),
     );
   }
 
-  // Reusable row for product details
-  Widget productDetailRow(String title, String value) {
+  Widget _toggleSection({
+    required String title,
+    required bool isExpanded,
+    required VoidCallback onTap,
+  }) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 12),
+        decoration: BoxDecoration(
+          border: Border(bottom: BorderSide(color: Colors.grey.shade300)),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              title,
+              style: GoogleFonts.poppins(
+                fontWeight: FontWeight.w600,
+                fontSize: 14,
+              ),
+            ),
+            Icon(
+              isExpanded ? Icons.keyboard_arrow_up : Icons.keyboard_arrow_down,
+              size: 26,
+              color: Colors.black54,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _productDetailRow(String title, String value) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 5),
+      padding: const EdgeInsets.symmetric(vertical: 6),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(title,
-              style: GoogleFonts.poppins(
-                fontSize: 13,
-                color: Colors.black54,
-              )),
-          Text(value,
-              style: GoogleFonts.poppins(
-                fontSize: 13,
-                fontWeight: FontWeight.w500,
-              )),
+          Text(
+            title,
+            style: GoogleFonts.poppins(fontSize: 13, color: Colors.black54),
+          ),
+          Text(
+            value,
+            style: GoogleFonts.poppins(
+              fontSize: 13,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
         ],
       ),
     );

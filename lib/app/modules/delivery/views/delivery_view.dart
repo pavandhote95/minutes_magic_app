@@ -3,9 +3,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:minutes_magic_app/app/modules/address/views/address_view.dart';
 import 'package:minutes_magic_app/app/modules/delivery/controllers/delivery_controller.dart';
 import 'package:minutes_magic_app/app/routes/app_pages.dart';
+
+import '../../address/views/delivery_address.dart';
 
 class DeliveryView extends StatelessWidget {
   const DeliveryView({super.key});
@@ -129,7 +130,7 @@ class DeliveryView extends StatelessWidget {
                               onPressed: () async {
                                 if (controller.dropoffController.text.isEmpty) {
                                   final selectedAddress = await Get.to(
-                                    () => const AddressView(),
+                                    () => const DeliveryAddressView(),
                                   );
                                   if (selectedAddress != null &&
                                       selectedAddress is String) {

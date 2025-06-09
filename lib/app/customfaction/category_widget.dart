@@ -7,8 +7,6 @@ import '../modules/home/views/product_list.dart';
 class CategoryPage extends StatelessWidget {
   const CategoryPage({super.key});
   final List<Map<String, String>> categories = const [
-
-
     {'icon': 'assets/icons/doctor.png', 'name': 'Doctor'},
     {'icon': 'assets/icons/food.png', 'name': 'Food'},
     {'icon': 'assets/icons/gym.png', 'name': 'Fitness'},
@@ -19,7 +17,6 @@ class CategoryPage extends StatelessWidget {
     {'icon': 'assets/icons/plumber.png', 'name': 'Plumber'},
     {'icon': 'assets/icons/tech.png', 'name': 'IT Support'},
     {'icon': 'assets/icons/tech.png', 'name': 'IT Support'},
-
   ];
 
   @override
@@ -90,8 +87,7 @@ class CategoryGrid {
               context,
               MaterialPageRoute(
                 builder:
-                    (_) =>
-                    ProductList(
+                    (_) => ProductList(
                       category: categoryName,
                       products: selectedProducts,
                     ),
@@ -117,6 +113,4 @@ class CategoryGrid {
       },
     );
   }
-
-
 }

@@ -49,81 +49,91 @@ class ProductGridPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isPortrait =
+        MediaQuery.of(context).orientation == Orientation.portrait;
+    final screenWidth = MediaQuery.of(context).size.width;
+
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Padding(
-        padding: const EdgeInsets.all(8),
-        child: GridView.builder(
-          itemCount: products.length,
-          physics: NeverScrollableScrollPhysics(),
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 3,
-            crossAxisSpacing: 28,
-            mainAxisSpacing: 10,
-            childAspectRatio: 0.55,
-          ),
-          itemBuilder: (context, index) {
-            final product = products[index];
-            return Container(
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(12),
-              ),
-
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  AspectRatio(
-                    aspectRatio: 1,
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(8),
-                      child: Image.asset(product.image, fit: BoxFit.cover),
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          int crossAxisCount = isPortrait ? 3 : 4;
+          double spacing = screenWidth * 0.04;
+          return GridView.builder(
+            itemCount: products.length,
+            physics: const NeverScrollableScrollPhysics(),
+            shrinkWrap: true,
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: crossAxisCount,
+              crossAxisSpacing: spacing,
+              mainAxisSpacing: 12,
+              childAspectRatio: 0.62,
+            ),
+            itemBuilder: (context, index) {
+              final product = products[index];
+              return Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                padding: const EdgeInsets.all(6),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    AspectRatio(
+                      aspectRatio: 1,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(8),
+                        child: Image.asset(product.image, fit: BoxFit.cover),
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    product.name,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.w600,
-                      fontSize: 10,
+                    const SizedBox(height: 8),
+                    Text(
+                      product.name,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 11,
+                      ),
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
                     ),
-                  ),
-                  const SizedBox(height: 4),
-                  Row(
-                    children: [
+                    const SizedBox(height: 4),
+                    Row(
+                      children: [
+                        Text(
+                          '₹ ${product.price}',
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 12,
+                          ),
+                        ),
+                        const SizedBox(width: 6),
+                        if (product.oldPrice != null)
+                          Text(
+                            '₹ ${product.oldPrice}',
+                            style: const TextStyle(
+                              color: Colors.grey,
+                              decoration: TextDecoration.lineThrough,
+                              fontSize: 11,
+                            ),
+                          ),
+                      ],
+                    ),
+                    if (product.unit != null)
                       Text(
-                        '₹ ${product.price}',
+                        product.unit!,
                         style: const TextStyle(
-                          fontWeight: FontWeight.bold,
+                          color: Colors.grey,
                           fontSize: 11,
                         ),
                       ),
-                      const SizedBox(width: 6),
-                      if (product.oldPrice != null)
-                        Text(
-                          '₹ ${product.oldPrice}',
-                          style: const TextStyle(
-                            color: Colors.grey,
-                            decoration: TextDecoration.lineThrough,
-                            fontSize: 11,
-                          ),
-                        ),
-                    ],
-                  ),
-                  if (product.unit != null)
-                    Text(
-                      product.unit!,
-                      style: const TextStyle(color: Colors.grey, fontSize: 11),
-                    ),
-                ],
-              ),
-            );
-          },
-        ),
+                  ],
+                ),
+              );
+            },
+          );
+        },
       ),
-
-
-
     );
   }
 }

@@ -1,7 +1,8 @@
 import 'package:get/get.dart';
-import 'package:minutes_magic_app/app/modules/home/controllers/cart_controller.dart';
 
-class Cartview extends Bindings {
+import '../controllers/cart_controller.dart';
+
+class CartBinding implements Bindings {
   @override
   void dependencies() {
     Get.lazyPut<CartController>(() => CartController());

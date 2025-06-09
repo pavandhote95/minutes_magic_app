@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
+
 import 'package:minutes_magic_app/app/modules/allcategory/model/product_model.dart';
 
 import '../../product_details/views/product_details_view.dart';
@@ -19,93 +19,107 @@ class ProductListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text('$category Products'),
+        leading: CircleAvatar(
+          backgroundColor: Colors.grey.shade200, // ya koi bhi color
+          radius: 20, // size adjust karo yaha
+          child: Icon(
+            Icons.arrow_back_ios,
+            color: Colors.black,
+            size: 18,
+          ),
+        ),
+
+          title: Text('$category Products'),
         backgroundColor: Colors.white,
       ),
       body: Padding(
-        padding: const EdgeInsets.all(8),
+        padding: const EdgeInsets.all(12.0),
         child: GridView.builder(
           itemCount: products.length,
-          physics: const NeverScrollableScrollPhysics(),
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 3,
-            crossAxisSpacing: 28,
-            mainAxisSpacing: 10,
-            childAspectRatio: 0.55,
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            mainAxisSpacing: 16,
+            crossAxisSpacing: 16,
+            childAspectRatio: 0.7,
           ),
           itemBuilder: (context, index) {
             final product = products[index];
-            return GestureDetector(
-              onTap: () => Get.to(ProductDetailsView(product: product,)),
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                padding: const EdgeInsets.all(6),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    AspectRatio(
-                      aspectRatio: 1,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(8),
-                        child: Image.asset(
-                          product.image,
-                          fit: BoxFit.cover,
+            return Container(
+              padding: EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.grey.shade200),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: Center(
+                      child: GestureDetector(
+                        onTap: () {
+                          Get.to(() => ProductDetailsView(product: product));
+                        },
+                        child: Hero(
+                          tag: 'product-image-${product.name}',
+                          child: Image.asset(
+                            product.image,
+                            height: 80,
+                            fit: BoxFit.contain,
+                          ),
                         ),
                       ),
                     ),
-                    const SizedBox(height: 8),
-                    Text(
-                      product.name,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 10,
-                      ),
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
+                  ),
+                  SizedBox(height: 8),
+                  Text(
+                    product.name,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 10,
                     ),
-                    const SizedBox(height: 4),
-                    Row(
-                      children: [
-                        Text(
-                          '₹ ${product.price}',
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 11,
-                          ),
-                        ),
-                        const SizedBox(width: 6),
-                        if (product.oldPrice != null)
-                          Text(
-                            '₹ ${product.oldPrice}',
-                            style: const TextStyle(
-                              color: Colors.grey,
-                              decoration: TextDecoration.lineThrough,
-                              fontSize: 11,
-                            ),
-                          ),
-                      ],
-                    ),
-                    if (product.unit != null)
+                  ),
+                  Text(
+                    product.unit!,
+                    style: const TextStyle(color: Colors.grey, fontSize: 11),
+                  ),
+                  SizedBox(height: 6),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
                       Text(
-                        product.unit!,
+                        '₹ ${product.oldPrice}',
                         style: const TextStyle(
                           color: Colors.grey,
+                          decoration: TextDecoration.lineThrough,
                           fontSize: 11,
                         ),
                       ),
-                  ],
-                ),
+                      Container(
+                        height: 20,
+                        width: 20,
+                        decoration: BoxDecoration(
+                          color: const Color.fromARGB(255, 34, 125, 37),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: IconButton(
+                          onPressed: () {},
+                          icon: Icon(Icons.add, color: Colors.white),
+                          iconSize: 20,
+                          padding: EdgeInsets.zero,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
               ),
             );
           },
         ),
       ),
-
-
     );
   }
+
+
 }
