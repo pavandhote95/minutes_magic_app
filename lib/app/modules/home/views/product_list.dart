@@ -148,7 +148,7 @@ class ProductList extends StatelessWidget {
                           ),
                           child: IconButton(
                             onPressed: () {
-                              Get.find<CartController>().addToCart(product);
+                              Get.to(() => ProductDetailsView(product: product));
                             },
                             icon: const Icon(Icons.add, color: Colors.white),
                             iconSize: 18,

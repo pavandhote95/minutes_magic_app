@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:minutes_magic_app/app/constants/AppTextStyle.dart';
@@ -124,33 +125,43 @@ class CartView extends GetView<CartController> {
                                       ),
                                       Row(
                                         children: [
-                                          IconButton(
-                                            icon: const Icon(
-                                              Icons.remove_circle_outline,
-                                              size: 25,
-                                            ),
+                                          ElevatedButton(
                                             onPressed: () {
-                                              controller.decreaseQuantity(
-                                                product.id,
-                                              );
+                                              controller.decreaseQuantity(product.id);
                                             },
-                                            color: Colors.grey,
+                                            style: ElevatedButton.styleFrom(
+                                              backgroundColor: Color(0xFF227D25),
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius: BorderRadius.circular(8),
+                                              ),
+                                              minimumSize: const Size(40, 40), // Slightly bigger size
+                                              padding: EdgeInsets.zero,
+                                            ),
+                                            child: const Icon(Icons.remove, color: Colors.white),
                                           ),
-                                          Text('${item.quantity}'),
-                                          IconButton(
-                                            icon: const Icon(
-                                              Icons.add_circle_outline,
-                                              size: 25,
-                                            ),
+                                          const SizedBox(width: 12),
+                                          Text(
+                                            '${item.quantity}',
+                                            style: const TextStyle(fontSize: 18),
+                                          ),
+                                          const SizedBox(width: 12),
+                                          ElevatedButton(
                                             onPressed: () {
-                                              controller.increaseQuantity(
-                                                product.id,
-                                              );
+                                              controller.increaseQuantity(product.id);
                                             },
-                                            color: Colors.grey,
+                                            style: ElevatedButton.styleFrom(
+                                              backgroundColor: Color(0xFF227D25),
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius: BorderRadius.circular(8),
+                                              ),
+                                              minimumSize: const Size(40, 40),
+                                              padding: EdgeInsets.zero,
+                                            ),
+                                            child: const Icon(Icons.add, color: Colors.white),
                                           ),
                                         ],
-                                      ),
+                                      )
+
                                     ],
                                   ),
                                 ],
@@ -218,6 +229,12 @@ class CartView extends GetView<CartController> {
       }),
     );
   }
+
+
+
+
+
+
 
   void _showCheckoutBottomSheet(BuildContext context, double totalPrice) {
     showModalBottomSheet(
@@ -410,12 +427,15 @@ class CartView extends GetView<CartController> {
                     ),
                     onPressed: () {
                       if (selectedAddress.isEmpty) {
-                        Get.snackbar(
-                          "Address Required",
-                          "Please select a delivery address",
+                        Fluttertoast.showToast(
+                          msg: "Please select a delivery address",
+                          toastLength: Toast.LENGTH_SHORT,
+                          gravity: ToastGravity.BOTTOM,
                           backgroundColor: Colors.white,
-                          colorText: Colors.red,
+                          textColor: Colors.red,
+                          fontSize: 14.0,
                         );
+
                         return;
                       }
                       Navigator.pop(context);
@@ -436,6 +456,10 @@ class CartView extends GetView<CartController> {
       },
     );
   }
+
+
+
+
   Widget _buildOptionTile({
     required String title,
     String? subtitle,
