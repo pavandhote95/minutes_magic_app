@@ -5,7 +5,7 @@ import 'app/modules/address/controllers/address_controller.dart';
 import 'app/routes/app_pages.dart';
 
 void main() {
-  Get.put(AddressController());
+
   runApp(
     GetMaterialApp(
       initialBinding: CartBinding(),

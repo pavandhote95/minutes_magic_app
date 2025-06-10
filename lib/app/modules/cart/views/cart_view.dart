@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
@@ -9,6 +10,7 @@ import 'package:minutes_magic_app/app/modules/home/views/recent_products_grid.da
 import 'package:minutes_magic_app/app/modules/payment/views/payment_option_view.dart';
 
 import '../../address/views/address_view.dart';
+import '../../order/views/order_view.dart';
 import '../controllers/cart_controller.dart';
 
 class CartView extends GetView<CartController> {
@@ -24,39 +26,64 @@ class CartView extends GetView<CartController> {
         title: Text("Cart", style: AppTextStyle.Bold
           (fontSize: 20)),
         centerTitle: true,
-        leading: Padding(
-          padding: const EdgeInsets.all(8),
-          child: InkWell(
-            onTap: () {
-              Get.back();
-            },
-            child: Container(
-              height: 28,
-              width: 28,
-
-              decoration: BoxDecoration(
-                color: const Color.fromARGB(224, 244, 243, 243),
-                borderRadius: BorderRadius.circular(30),
-              ),
-              child: const Center(
-                child: Icon(
-                  Icons.arrow_back_ios,
-                  color: Colors.black54,
-                  size: 18,
-                ),
-              ),
-            ),
-          ),
-        ),
+        leading:   const BackButton(color: Colors.black),
       ),
       body: Obx(() {
         if (controller.cartItems.isEmpty) {
-          return Center(
-            child: Text(
-              "Your cart is empty",
-              style: GoogleFonts.poppins(fontSize: 16),
-            ),
+
+
+          return Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              FadeInDown(
+                duration: Duration(milliseconds: 500),
+                child: Center(
+                  child: Image.asset(
+                    'assets/images/empty_cart.png', // 👈 Replace with your image path
+                    height: 180,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 20),
+              FadeInUp(
+                duration: Duration(milliseconds: 500),
+                child: Column(
+                  children: [
+                    Text(
+                      'Your cart is empty',
+                      style: GoogleFonts.poppins(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.grey[800],
+                      ),
+                    ),
+                    const SizedBox(height: 40),
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.redAccent,
+                        padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 14),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      ),
+                      onPressed: () {
+                        Get.back(); // or Get.to(ProductListView());
+                      },
+                      child: Text(
+                        'Browse Products',
+                        style: GoogleFonts.poppins(
+                          fontSize: 16,
+                          color: Colors.white,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
           );
+
         }
 
         return SingleChildScrollView(
@@ -96,6 +123,8 @@ class CartView extends GetView<CartController> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
+
+
                                   Text(
                                     product.name,
                                     style: GoogleFonts.cinzel(
@@ -147,6 +176,7 @@ class CartView extends GetView<CartController> {
                                           const SizedBox(width: 12),
                                           ElevatedButton(
                                             onPressed: () {
+
                                               controller.increaseQuantity(product.id);
                                             },
                                             style: ElevatedButton.styleFrom(
@@ -426,6 +456,7 @@ class CartView extends GetView<CartController> {
                       ),
                     ),
                     onPressed: () {
+
                       if (selectedAddress.isEmpty) {
                         Fluttertoast.showToast(
                           msg: "Please select a delivery address",
@@ -438,7 +469,14 @@ class CartView extends GetView<CartController> {
 
                         return;
                       }
-                      Navigator.pop(context);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const OrderConfirmedView(),
+                        ),
+                      );
+
+
                       // Place order logic
                     },
                     style: ElevatedButton.styleFrom(

@@ -39,31 +39,7 @@ class AllcategoryView extends StatelessWidget {
         backgroundColor: Colors.white,
         centerTitle: true,
         title: Text("All category"),
-        leading: Padding(
-          padding: const EdgeInsets.all(8),
-          child: InkWell(
-            onTap: () {
-              Get.back();
-            },
-            child: Container(
-              height: 28,
-              width: 28,
-
-              decoration: BoxDecoration(
-
-                color: const Color.fromARGB(224, 244, 243, 243),
-                borderRadius: BorderRadius.circular(30),
-              ),
-              child: const Center(
-                child: Icon(
-                  Icons.arrow_back_ios,
-                  color: Colors.black54,
-                  size: 18,
-                ),
-              ),
-            ),
-          ),
-        ),
+        leading:  const BackButton(color: Colors.black),
 
         elevation: 0,
       ),

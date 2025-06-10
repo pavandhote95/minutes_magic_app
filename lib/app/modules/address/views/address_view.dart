@@ -1,3 +1,5 @@
+import 'package:flutter/foundation.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -24,7 +26,7 @@ class DeliveryAddressView extends GetView<AddressController> {
             onPressed: () {
               final selected = controller.selectedSavedAddress.value;
               if (selected.isNotEmpty) {
-                Get.back(result: selected); // Return the selected address
+                Get.back(result: selected);
               } else {
                 Get.snackbar(
                   "No address selected",
@@ -41,19 +43,22 @@ class DeliveryAddressView extends GetView<AddressController> {
                 borderRadius: BorderRadius.circular(10),
               ),
             ),
-            child: Obx(() => Text(
-              controller.selectedSavedAddress.value.isNotEmpty
-                  ? "Save Address"
-                  : "Select Address",
-              style: GoogleFonts.poppins(
-                color: Colors.white,
-                fontSize: 16,
-                fontWeight: FontWeight.w600,
+            child: Obx(
+                  () => Text(
+                controller.selectedSavedAddress.value.isNotEmpty
+                    ? "Save Address"
+                    : "Select Address",
+                style: GoogleFonts.poppins(
+                  color: Colors.white,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
-            )),
+            ),
           ),
         ),
       ),
+
       appBar: AppBar(
         elevation: 0,
         centerTitle: true,
@@ -76,7 +81,6 @@ class DeliveryAddressView extends GetView<AddressController> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-
                 // Search Field
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -143,7 +147,8 @@ class DeliveryAddressView extends GetView<AddressController> {
                   padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
                   child: Center(
                     child: Container(
-                      decoration: BoxDecoration(borderRadius:BorderRadius.circular(15),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
                         color: Colors.grey.shade200,
                       ),
                       height: 250,
@@ -154,37 +159,40 @@ class DeliveryAddressView extends GetView<AddressController> {
                           color: Colors.redAccent,
                         ),
                       )
-                          :  Container(
-                        decoration: BoxDecoration(borderRadius:BorderRadius.circular(15),
-                          color: Colors.grey.shade200,
+                          : GoogleMap(
+                        initialCameraPosition: CameraPosition(
+                          target: controller.initialPosition.value!,
+                          zoom: 14,
                         ),
-                        height: 250,
-                            child: GoogleMap(
-
-                                                    initialCameraPosition: CameraPosition(
-                            target: controller.initialPosition.value!,
-                            zoom: 14,
-                                                    ),
-                                                    onMapCreated: (map) => controller.mapController = map,
-                                                    myLocationEnabled: true,
-                                                    zoomControlsEnabled: false,
-                                                    onTap: controller.handleMapTap,
-                                                    markers: controller.selectedMarker.value != null
-                              ? {controller.selectedMarker.value!}
-                              : {},
-                                                  ),
+                        onMapCreated: (map) => controller.mapController = map,
+                        myLocationEnabled: true,
+                        myLocationButtonEnabled: true,
+                        zoomControlsEnabled: false,
+                        scrollGesturesEnabled: true,
+                        zoomGesturesEnabled: true,
+                        tiltGesturesEnabled: true,
+                        rotateGesturesEnabled: true,
+                        onTap: controller.handleMapTap,
+                        markers: controller.selectedMarker.value != null
+                            ? {controller.selectedMarker.value!}
+                            : {},
+                        gestureRecognizers: <Factory<OneSequenceGestureRecognizer>>{
+                          Factory<OneSequenceGestureRecognizer>(
+                                () => EagerGestureRecognizer(),
                           ),
+                        },
+                      ),
                     ),
                   ),
                 ),
 
-                // Shimmer Placeholders or Content
+                // Shimmer or Content
                 if (controller.initialPosition.value == null) ...[
                   shimmerBox(height: 70),
                   shimmerBox(height: 24, width: 180),
                   ...List.generate(2, (_) => shimmerBox(height: 80)),
                 ] else ...[
-                  // Tapped Address Container
+                  // Tapped Address
                   if (controller.startAddressController.text.isNotEmpty)
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
@@ -204,9 +212,13 @@ class DeliveryAddressView extends GetView<AddressController> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text("Tapped Location",
-                                      style: GoogleFonts.poppins(
-                                          fontWeight: FontWeight.w500, fontSize: 13)),
+                                  Text(
+                                    "Tapped Location",
+                                    style: GoogleFonts.poppins(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 13,
+                                    ),
+                                  ),
                                   const SizedBox(height: 4),
                                   Text(
                                     controller.startAddressController.text,
@@ -220,8 +232,7 @@ class DeliveryAddressView extends GetView<AddressController> {
                             const SizedBox(width: 8),
                             ElevatedButton(
                               onPressed: () {
-                                final tapped =
-                                controller.startAddressController.text.trim();
+                                final tapped = controller.startAddressController.text.trim();
                                 if (tapped.isNotEmpty &&
                                     !controller.previousAddresses.contains(tapped)) {
                                   controller.previousAddresses.add(tapped);
@@ -237,9 +248,13 @@ class DeliveryAddressView extends GetView<AddressController> {
                                 ),
                                 padding: const EdgeInsets.symmetric(horizontal: 12),
                               ),
-                              child: Text("Add",
-                                  style: GoogleFonts.poppins(
-                                      fontSize: 13, color: Colors.white)),
+                              child: Text(
+                                "Add",
+                                style: GoogleFonts.poppins(
+                                  fontSize: 13,
+                                  color: Colors.white,
+                                ),
+                              ),
                             ),
                           ],
                         ),
@@ -252,15 +267,21 @@ class DeliveryAddressView extends GetView<AddressController> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text("Saved Locations",
-                            style: GoogleFonts.poppins(
-                                fontWeight: FontWeight.w600, fontSize: 16)),
+                        Text(
+                          "Saved Locations",
+                          style: GoogleFonts.poppins(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 16,
+                          ),
+                        ),
                         TextButton.icon(
                           onPressed: controller.addNewAddressDialog,
                           icon: const Icon(Icons.add_location_alt_rounded,
                               color: Colors.redAccent),
-                          label: Text("Add",
-                              style: GoogleFonts.poppins(color: Colors.redAccent)),
+                          label: Text(
+                            "Add",
+                            style: GoogleFonts.poppins(color: Colors.redAccent),
+                          ),
                         ),
                       ],
                     ),
@@ -282,69 +303,68 @@ class DeliveryAddressView extends GetView<AddressController> {
                     ),
                   )
                       : Column(
-                    children: controller.previousAddresses.map(
-                          (address) {
-                        return GestureDetector(
-                          onTap: () => controller.selectAddress(address),
-                          child: Container(
-                            margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                            padding: const EdgeInsets.all(12),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(12),
-                              border: Border.all(
-                                color: controller.selectedSavedAddress.value == address
-                                    ? Colors.redAccent
-                                    : Colors.grey.shade300,
-                                width: 1.5,
+                    children: controller.previousAddresses.map((address) {
+                      return GestureDetector(
+                        onTap: () => controller.selectAddress(address),
+                        child: Container(
+                          margin: const EdgeInsets.symmetric(
+                              horizontal: 16, vertical: 8),
+                          padding: const EdgeInsets.all(12),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(12),
+                            border: Border.all(
+                              color: controller.selectedSavedAddress.value == address
+                                  ? Colors.redAccent
+                                  : Colors.grey.shade300,
+                              width: 1.5,
+                            ),
+                            color: Colors.white,
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.05),
+                                blurRadius: 5,
+                                offset: const Offset(0, 2),
                               ),
-                              color: Colors.white,
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey.withOpacity(0.05),
-                                  blurRadius: 5,
-                                  offset: const Offset(0, 2),
-                                ),
-                              ],
-                            ),
-                            child: Row(
-                              children: [
-                                Radio<String>(
-                                  value: address,
-                                  groupValue: controller.selectedSavedAddress.value,
-                                  onChanged: (val) {
-                                    if (val != null) {
-                                      controller.selectAddress(val);
-                                    }
-                                  },
-                                  activeColor: Colors.redAccent,
-                                ),
-                                const SizedBox(width: 4),
-                                Expanded(
-                                  child: Text(
-                                    address,
-                                    style: GoogleFonts.poppins(fontSize: 13),
-                                    overflow: TextOverflow.ellipsis,
-                                    maxLines: 2,
-                                  ),
-                                ),
-                                IconButton(
-                                  icon: const Icon(Icons.edit,
-                                      color: Colors.blue, size: 20),
-                                  onPressed: () =>
-                                      controller.editAddressDialog(address),
-                                ),
-                                IconButton(
-                                  icon: const Icon(Icons.delete,
-                                      color: Colors.red, size: 20),
-                                  onPressed: () =>
-                                      controller.deleteAddress(address),
-                                ),
-                              ],
-                            ),
+                            ],
                           ),
-                        );
-                      },
-                    ).toList(),
+                          child: Row(
+                            children: [
+                              Radio<String>(
+                                value: address,
+                                groupValue: controller.selectedSavedAddress.value,
+                                onChanged: (val) {
+                                  if (val != null) {
+                                    controller.selectAddress(val);
+                                  }
+                                },
+                                activeColor: Colors.redAccent,
+                              ),
+                              const SizedBox(width: 4),
+                              Expanded(
+                                child: Text(
+                                  address,
+                                  style: GoogleFonts.poppins(fontSize: 13),
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 2,
+                                ),
+                              ),
+                              IconButton(
+                                icon: const Icon(Icons.edit,
+                                    color: Colors.blue, size: 20),
+                                onPressed: () =>
+                                    controller.editAddressDialog(address),
+                              ),
+                              IconButton(
+                                icon: const Icon(Icons.delete,
+                                    color: Colors.red, size: 20),
+                                onPressed: () =>
+                                    controller.deleteAddress(address),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    }).toList(),
                   ),
                 ],
               ],
@@ -355,7 +375,6 @@ class DeliveryAddressView extends GetView<AddressController> {
     );
   }
 
-  // Utility shimmer widget
   Widget shimmerBox({double height = 70, double width = double.infinity}) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),

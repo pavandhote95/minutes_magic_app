@@ -32,24 +32,7 @@ class ProductList extends StatelessWidget {
           ),
         ),
         centerTitle: true,
-        leading: Padding(
-          padding: const EdgeInsets.only(left: 10, top: 8, bottom: 8, right: 8),
-          child: InkWell(
-            onTap: () => Get.back(),
-            borderRadius: BorderRadius.circular(30),
-            child: Container(
-              height: 80,
-              width: 80,
-              decoration: const BoxDecoration(
-                color: Color(0xFFF1F1F1),
-                shape: BoxShape.circle,
-              ),
-              child: const Center(
-                child: Icon(Icons.arrow_back_ios, color: Colors.black87, size: 16),
-              ),
-            ),
-          ),
-        ),
+        leading:   const BackButton(color: Colors.black),
         actions: [
           IconButton(
             icon: Image.asset("assets/icons/sort.png", width: 18, height: 18),

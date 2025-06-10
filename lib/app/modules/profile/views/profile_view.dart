@@ -76,8 +76,10 @@ class ProfileView extends GetView<ProfileController> {
           _buildSwitchTile(),
           _buildOptionTile(
             Icons.receipt_long_outlined,
-            "Transaction History",
-            () {},
+            "Address",
+            () {
+              Get.toNamed('/address');
+            },
           ),
 
           _buildOptionTile(Icons.info_outline, "About app", () {}),

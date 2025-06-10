@@ -6,6 +6,8 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
+import '../address/controllers/address_controller.dart';
+
 class StartView extends StatefulWidget {
   const StartView({super.key});
 
@@ -25,6 +27,7 @@ class _StylishViewState extends State<StartView>
   @override
   void initState() {
     super.initState();
+
 
     // Animation controller can be initialized here if needed
   }
@@ -172,6 +175,7 @@ class _StylishViewState extends State<StartView>
                   const SizedBox(height: 16),
                   ElevatedButton(
                     onPressed: () {
+                      Get.put(AddressController());
                       Get.toNamed('/login');
                     },
                     style: ElevatedButton.styleFrom(

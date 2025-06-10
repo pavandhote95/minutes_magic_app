@@ -19,6 +19,20 @@ class ProductDetailsView extends GetView<ProductDetailsController> {
     final CartController cartController = Get.find<CartController>();
 
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+     leading:    const BackButton(color: Colors.black),
+    centerTitle: true,
+       title:  Text(
+           "Product Detail",
+           style: GoogleFonts.poppins(
+             fontSize: 18,
+             fontWeight: FontWeight.w600,
+             color: Colors.black87,
+           ),
+        ),
+      ) ,
+
       backgroundColor: Colors.white,
       body: SafeArea(
         child: StatefulBuilder(
@@ -32,37 +46,7 @@ class ProductDetailsView extends GetView<ProductDetailsController> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     // Back button and title
-                    Row(
-                      children: [
-                        InkWell(
-                          onTap: () => Get.back(),
-                          borderRadius: BorderRadius.circular(30),
-                          child: Container(
-                            height: 40,
-                            width: 40,
-                            decoration: BoxDecoration(
-                              color: const Color(0xFFF1F1F1),
-                              shape: BoxShape.circle,
-                            ),
-                            child: const Icon(
-                              Icons.arrow_back_ios_new_rounded,
-                              size: 18,
-                              color: Colors.black54,
-                            ),
-                          ),
-                        ),
-                        const Spacer(),
-                        Text(
-                          "Product Detail",
-                          style: GoogleFonts.poppins(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.black87,
-                          ),
-                        ),
-                        const Spacer(flex: 2),
-                      ],
-                    ),
+
                     const SizedBox(height: 20),
 
                     // Product images

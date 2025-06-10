@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-import 'package:minutes_magic_app/app/modules/address/views/delivery_address.dart' hide DeliveryAddressView;
 
 import '../modules/address/bindings/address_binding.dart';
 import '../modules/address/views/address_view.dart';
@@ -12,6 +11,8 @@ import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/login/bindings/login_binding.dart';
 import '../modules/login/views/login_view.dart';
+import '../modules/order/bindings/order_binding.dart';
+import '../modules/order/views/order_view.dart';
 import '../modules/otp/bindings/otp_binding.dart';
 import '../modules/otp/views/otp_view.dart';
 import '../modules/product_details/bindings/product_details_binding.dart';
@@ -23,6 +24,9 @@ import '../modules/search/views/search_view.dart';
 import '../modules/splash/bindings/splash_binding.dart';
 import '../modules/splash/start_screen.dart';
 import '../modules/splash/views/splash_view.dart';
+
+import 'package:minutes_magic_app/app/modules/address/views/delivery_address.dart'
+    hide DeliveryAddressView;
 
 part 'app_routes.dart';
 
@@ -92,6 +96,11 @@ class AppPages {
       name: _Paths.CART,
       page: () => const CartView(),
       binding: CartBinding(),
+    ),
+    GetPage(
+      name: _Paths.orderconfirmed,
+      page: () => const OrderConfirmedView(),
+      binding: OrderBinding(),
     ),
   ];
 }
