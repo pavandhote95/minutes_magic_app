@@ -18,6 +18,8 @@ abstract class Routes {
   static const CART = _Paths.CART;
   static const ORDER = _Paths.orderconfirmed;
   static const allcategory = _Paths.allcategory;
+  static const MYORDERS = _Paths.MYORDERS;
+  static const TRACKMYORDER = _Paths.TRACKMYORDER;
 }
 
 abstract class _Paths {
@@ -38,4 +40,6 @@ abstract class _Paths {
   static const CART = '/cart';
   static const orderconfirmed = '/order-confirmed';
   static const allcategory = '/all-category';
+  static const MYORDERS = '/myorders';
+  static const TRACKMYORDER = '/trackmyorder';
 }

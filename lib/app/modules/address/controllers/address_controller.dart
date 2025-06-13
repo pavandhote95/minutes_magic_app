@@ -118,13 +118,20 @@ class AddressController extends GetxController {
   }
 
   void addToPrevious(String address) {
-    if (!previousAddresses.contains(address)) {
-      previousAddresses.insert(0, address);
-      if (previousAddresses.length > 5) {
-        previousAddresses.removeLast();
-      }
+    if (address.trim().isEmpty) return;
+
+    // Remove if already exists to avoid duplicates
+    previousAddresses.remove(address);
+
+    // Insert at the top
+    previousAddresses.insert(0, address);
+
+    // Keep only the latest 5 entries
+    if (previousAddresses.length > 5) {
+      previousAddresses.removeLast();
     }
   }
+
 
   void selectAddress(String address) {
     selectedSavedAddress.value = address;

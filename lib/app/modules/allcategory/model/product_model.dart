@@ -8,6 +8,7 @@ class ProductModel {
   final String? unit;
   final String image;
   final Color? backgroundColor;
+  final double? rating;
 
   ProductModel({
     required this.id,
@@ -17,5 +18,6 @@ class ProductModel {
     this.unit,
     required this.image,
     this.backgroundColor,
+    this.rating
   });
 }

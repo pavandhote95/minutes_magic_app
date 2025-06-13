@@ -93,6 +93,7 @@ class ProductDetailsView extends GetView<ProductDetailsController> {
                     const SizedBox(height: 20),
 
                     // Product name
+                    // Product name
                     Text(
                       product.name.toUpperCase(),
                       style: GoogleFonts.poppins(
@@ -100,6 +101,43 @@ class ProductDetailsView extends GetView<ProductDetailsController> {
                         fontWeight: FontWeight.w600,
                       ),
                     ),
+                    const SizedBox(height: 8),
+
+// ⭐ Rating Row
+                    Row(
+                      children: [
+                        Row(
+                          children: List.generate(5, (index) {
+                            return Icon(
+                              Icons.star,
+                              size: 16,
+                              color: index < (product.rating ?? 4).round()
+                                  ? Colors.orange
+                                  : Colors.grey.shade300,
+                            );
+                          }),
+                        ),
+                        const SizedBox(width: 8),
+                        Text(
+                          "${product.rating?.toStringAsFixed(1) ?? '4.0'}",
+                          style: GoogleFonts.poppins(
+                            fontSize: 13,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.black87,
+                          ),
+                        ),
+                        const SizedBox(width: 4),
+                        Text(
+                          "(12,345)", // You can make this dynamic if needed
+                          style: GoogleFonts.poppins(
+                            fontSize: 12,
+                            color: Colors.grey,
+                          ),
+                        ),
+                      ],
+                    ),
+
+
                     const SizedBox(height: 8),
 
                     // Price and discount

@@ -146,15 +146,17 @@ class DeliveryAddressView extends GetView<AddressController> {
                           ),
                           const SizedBox(width: 8),
                           ElevatedButton(
-                            onPressed: () {
-                              final tapped = controller.startAddressController.text.trim();
-                              if (tapped.isNotEmpty &&
-                                  !controller.previousAddresses.contains(tapped)) {
-                                controller.previousAddresses.add(tapped);
-                                controller.selectedSavedAddress.value = tapped;
-                                controller.startAddressController.clear();
-                              }
-                            },
+          onPressed: () {
+          final tapped = controller.startAddressController.text.trim();
+          if (tapped.isNotEmpty &&
+          !controller.previousAddresses.contains(tapped)) {
+          controller.previousAddresses.insert(0, tapped); // <-- Add to beginning
+          controller.selectedSavedAddress.value = tapped;
+          controller.startAddressController.clear();
+          }
+
+
+        },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.green,
                               minimumSize: const Size(50, 36),

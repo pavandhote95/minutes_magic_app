@@ -1,7 +1,11 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+import '../../myorders/views/myorders_view.dart';
+import '../../trackmyorder/views/trackmyorder_view.dart';
 
 class OrderConfirmedView extends StatelessWidget {
   const OrderConfirmedView({super.key});
@@ -11,7 +15,6 @@ class OrderConfirmedView extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-
         leading:  const BackButton(color: Colors.black),
         title: Text(
           'Order Confirmed',
@@ -71,15 +74,23 @@ class OrderConfirmedView extends StatelessWidget {
                   fontSize: 14,
                   color: Colors.black54,
                 ),
-                children: const [
+                children: [
                   TextSpan(text: 'Your order has been placed successfully. '),
                   TextSpan(
                     text: 'View Order History',
-                    style: TextStyle(
-                      color:Color(0xFF227D25),
+                    style: const TextStyle(
+                      color: Color(0xFF227D25),
                       fontWeight: FontWeight.w600,
                     ),
+                    recognizer: TapGestureRecognizer()
+                      ..onTap = () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => MyordersView()),
+                        );// 👈 Navigate to your "My Orders" page
+                      },
                   ),
+
                 ],
               ),
             ),
@@ -98,6 +109,10 @@ class OrderConfirmedView extends StatelessWidget {
             // Track order button
             TextButton(
               onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => TrackmyorderView()),
+                );// 👈
                 // Handle track order
               },
               child: Text(

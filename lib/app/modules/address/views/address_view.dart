@@ -171,6 +171,7 @@ class DeliveryAddressView extends GetView<AddressController> {
                         scrollGesturesEnabled: true,
                         zoomGesturesEnabled: true,
                         tiltGesturesEnabled: true,
+
                         rotateGesturesEnabled: true,
                         onTap: controller.handleMapTap,
                         markers: controller.selectedMarker.value != null
@@ -303,7 +304,7 @@ class DeliveryAddressView extends GetView<AddressController> {
                     ),
                   )
                       : Column(
-                    children: controller.previousAddresses.map((address) {
+                    children: controller.previousAddresses.reversed.map((address) {
                       return GestureDetector(
                         onTap: () => controller.selectAddress(address),
                         child: Container(

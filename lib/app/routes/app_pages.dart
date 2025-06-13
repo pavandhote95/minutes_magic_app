@@ -11,6 +11,8 @@ import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/login/bindings/login_binding.dart';
 import '../modules/login/views/login_view.dart';
+import '../modules/myorders/bindings/myorders_binding.dart';
+import '../modules/myorders/views/myorders_view.dart';
 import '../modules/order/bindings/order_binding.dart';
 import '../modules/order/views/order_view.dart';
 import '../modules/otp/bindings/otp_binding.dart';
@@ -24,6 +26,8 @@ import '../modules/search/views/search_view.dart';
 import '../modules/splash/bindings/splash_binding.dart';
 import '../modules/splash/start_screen.dart';
 import '../modules/splash/views/splash_view.dart';
+import '../modules/trackmyorder/bindings/trackmyorder_binding.dart';
+import '../modules/trackmyorder/views/trackmyorder_view.dart';
 
 import 'package:minutes_magic_app/app/modules/address/views/delivery_address.dart'
     hide DeliveryAddressView;
@@ -101,6 +105,16 @@ class AppPages {
       name: _Paths.orderconfirmed,
       page: () => const OrderConfirmedView(),
       binding: OrderBinding(),
+    ),
+    GetPage(
+      name: _Paths.MYORDERS,
+      page: () => MyordersView(),
+      binding: MyordersBinding(),
+    ),
+    GetPage(
+      name: _Paths.TRACKMYORDER,
+      page: () => const TrackmyorderView(),
+      binding: TrackmyorderBinding(),
     ),
   ];
 }
